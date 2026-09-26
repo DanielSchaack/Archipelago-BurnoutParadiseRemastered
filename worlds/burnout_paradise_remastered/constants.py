@@ -1,11 +1,11 @@
-from enum import IntEnum, StrEnum, Enum
+from enum import IntEnum, Enum
 
 BURNOUT_PARADISE_REMASTERED = "Burnout Paradise Remastered"
 
 class BreakableType(IntEnum):
+    SUPER_JUMP = 0
     SMASH = 1
     BILLBOARD = 2
-    SUPER_JUMP = 0
 
 class AreaTypeEnum(Enum):
     def __new__(cls, value: str, index: int):
@@ -35,7 +35,8 @@ BURNOUT_ELITE_WINS = 210
 
 ITEMS_OFFSET_TRAPS = 5000
 ITEMS_OFFSET_BLOCKERS = 1000
-ITEMS_OFFSET_Filler = 100
+ITEMS_OFFSET_BREAKABLES = 1010
+ITEMS_OFFSET_FILLER = 100
 
 #locations
 LOCATIONS_OFFSET_LICENSES = 1000

@@ -1,6 +1,8 @@
+from itertools import accumulate
+from functools import cached_property
 from dataclasses import dataclass
 
-from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, Range, OptionCounter
+from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, Range, OptionCounter, ItemDict
 from .constants import AreaType
 
 
@@ -43,14 +45,22 @@ class LicenseGoal(Choice):
 #     range_end = 75
 #     default = 0
 
-class BreakableLocks(Toggle):
+class BreakableLocks(Choice):
     """
     Lock each area's Sanity checks behind an item?
 
     This reduces sphere 1 down to a small amount of checks, which can help progression balancing.
 
     Recommended if you have sanity options turned up.
+
+    **All Unlocked From The Start** - All Smashes, Billboards and Super/Mega Jumps are available from the Start
+    **Locked By Area** - Smashes, Billboards and Super/Mega Jumps are locked behind regional items, all 3 types becoming available all at once per area
+    **Locked By Area And Type** - Smashes, Billboards and Super/Mega Jumps are locked behind individual regional items, becoming available per area per type
     """
+    option_all_unlocked_from_the_start = 0
+    option_locked_by_area = 1
+    option_locked_by_area_and_type = 2
+    default = 0
     display_name = "Lock Breakables"
     rich_text_doc = True
 
@@ -143,6 +153,28 @@ class DeathLink(Toggle):
     rich_text_doc = True
 
 
+filler_item_default = {
+    "Boost": 50,
+}
+
+class FillerItemsDistribution(ItemDict):
+    """
+    Change the weights of each filler
+
+    Valid Options:
+        - **Boost** - Refills your Boost bar
+    """
+
+    default = filler_item_default.copy()
+    valid_keys = filler_item_default.copy().keys()
+    min = 0
+    display_name = "Filler Weights"
+
+    @cached_property
+    def weights_pair(self) -> dict[str, int]:
+        return dict(zip(self.value.keys(), accumulate(self.value.values()), strict=False))
+
+
 burnout_paradise_remastered_option_groups= [
     OptionGroup("Game Options", [
         DeathLink
@@ -170,3 +202,4 @@ class BurnoutParadiseRemasteredOptions(PerGameCommonOptions):
     smash_counts: SmashSanityCounts
     billboard_counts: BillboardSanityCounts
     super_jump_counts: SuperJumpSanityCounts
+    filler_items_distribution: FillerItemsDistribution

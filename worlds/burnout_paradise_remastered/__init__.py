@@ -1,3 +1,4 @@
+from itertools import chain
 import json
 import os
 from importlib.resources import files
@@ -8,15 +9,15 @@ from Utils import visualize_regions
 from rule_builder.rules import Has, HasFromList, HasFromListUnique
 from worlds.AutoWorld import WebWorld
 from . import locations, items
-from .constants import BURNOUT_PARADISE_REMASTERED, D_CLASS_WINS, BURNOUT_WINS, BURNOUT_ELITE_WINS, A_CLASS_WINS, \
-    B_CLASS_WINS, C_CLASS_WINS, AreaType, BreakableType
-from .data.items import all_items, Events, Blockers
+from .constants import BURNOUT_PARADISE_REMASTERED, D_CLASS_WINS, BURNOUT_WINS, BURNOUT_ELITE_WINS, A_CLASS_WINS, B_CLASS_WINS, C_CLASS_WINS, AreaType, BreakableType
+from .data.items import all_items, Events, Blockers, Discoverables
 from .data.items.cars import Cars
 from .data.items.events import BurningEvents
-from .data.locations import all_Generated_locations, all_Enum_locations, breakable_count_lookup
+from .data.locations import all_generated_locations, all_enum_locations, breakable_count_lookup
 from .data.rules.state_rules import HasEventWins
 from .options import burnout_paradise_remastered_option_groups, BurnoutParadiseRemasteredOptions, Goal, LicenseGoal
 from .world_base import BurnoutParadiseRemasteredBase
+from .items import BurnoutParadiseRemasteredItem
 
 
 class BurnoutParadiseRemasteredWeb(WebWorld):
@@ -52,11 +53,11 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
     location_name_to_id: ClassVar[dict[str, int]] = {
         **{
             loc.value: loc.location_id
-            for loc in all_Enum_locations
+            for loc in all_enum_locations
         },
         **{
             gen_loc.name: gen_loc.location_id
-            for gen_loc in all_Generated_locations
+            for gen_loc in all_generated_locations
         },
     }
 
@@ -64,7 +65,9 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         "Car": {car.value for car in Cars},
         "Event": {event.value for event in Events},
         "Burning Route": {event.value for event in BurningEvents},
+        "Any Event": {e.value for e in chain(Events, BurningEvents)},
         "Area Breakable": {area.value for area in Blockers},
+        "Area Discoverable": {discoverable.value for discoverable in Discoverables},
     }
 
     item_lookup = {item.value: item for item in all_items}
@@ -82,7 +85,7 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
 
         self.goal_event_wins = 0
 
-        self.smash_sanity_data: list[(AreaType)] = {}
+        self.smash_sanity_data: dict[AreaType, int] = {}
 
         self.is_ut = False
         super().__init__(multiworld, player)
@@ -141,10 +144,10 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
     def connect_entrances(self) -> None:
         pass
 
-    def create_item(self, item: str) -> Item:
+    def create_item(self, item: str) -> BurnoutParadiseRemasteredItem:
         item_enum = self.item_lookup[item]
 
-        return Item(
+        return BurnoutParadiseRemasteredItem(
             item,
             item_enum.classification,
             item_enum.item_id,
@@ -155,6 +158,11 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         self.starting_items = items.create_items(self)
         for item in self.starting_items:
             self.push_precollected(item)
+
+    def get_filler_item_name(self) -> str:
+        if self.options.filler_items_distribution.weights_pair:
+            return items.create_random_items( self, self.options.filler_items_distribution.weights_pair, 1)[0]
+        return items.create_random_items( self, self.options.filler_items_distribution.default, 1)[0]
 
     def set_rules(self):
         # if self.options.goal.value == self.options.goal.option_collect_cars:

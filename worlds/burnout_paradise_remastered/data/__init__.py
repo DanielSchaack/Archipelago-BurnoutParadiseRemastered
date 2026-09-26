@@ -1,3 +1,4 @@
+from __future__ import annotations
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import TYPE_CHECKING
@@ -5,7 +6,8 @@ from typing import TYPE_CHECKING
 from BaseClasses import ItemClassification, CollectionRule, LocationProgressType, EntranceType
 from rule_builder.rules import Rule, True_
 
-from ..world_base import BurnoutParadiseRemasteredBase
+if TYPE_CHECKING:
+    from ..world_base import BurnoutParadiseRemasteredBase
 
 
 

@@ -10,3 +10,4 @@ class BurnoutParadiseRemasteredBase(CachedRuleBuilderWorld):
 
     def __init__(self, multiworld, player):
         super().__init__(multiworld, player)
+

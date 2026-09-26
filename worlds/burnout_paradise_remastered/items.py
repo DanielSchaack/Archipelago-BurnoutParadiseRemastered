@@ -1,15 +1,20 @@
 from typing import TYPE_CHECKING
 
 from BaseClasses import Item
+from .options import BreakableLocks
+from .constants import BURNOUT_PARADISE_REMASTERED
 from .data import ItemTypeEnum, ItemData
 from .data.items.blockers import Blockers
+from .data.items.discoverables import Discoverables
 from .data.items.cars import Cars, StartingCar, BurningCars
 from .data.items.events import Events, BurningEvents
-from .data.items.filler import Filler
+from .data.items.filler import get_default_dict
 
 if TYPE_CHECKING:
     from . import BurnoutParadiseRemasteredWorld
 
+class BurnoutParadiseRemasteredItem(Item):
+    game: str = BURNOUT_PARADISE_REMASTERED
 
 def create_item(world: "BurnoutParadiseRemasteredWorld", item: ItemData):
     for i in range(item.amount):
@@ -36,9 +41,13 @@ def create_items(world: "BurnoutParadiseRemasteredWorld"):
 
     remaining_events = set(Events) - starting_events
 
-    if world.options.breakable_locks.value:
-        for item_type in Blockers:
-            create_single_item(world, item_type)
+    match world.options.breakable_locks:
+        case BreakableLocks.option_locked_by_area:
+            for item_type in Blockers:
+                create_single_item(world, item_type)
+        case BreakableLocks.option_locked_by_area_and_type:
+            for item_type in Discoverables:
+                create_single_item(world, item_type)
     for item_type in Cars:
         create_single_item(world, item_type)
     for item_type in BurningCars:
@@ -51,8 +60,20 @@ def create_items(world: "BurnoutParadiseRemasteredWorld"):
 
     _remaining = total_location_count - len(world.itempool)
 
-    create_item(world, ItemData(Filler.BOOST, _remaining))
+    filler_items_distribution = world.options.filler_items_distribution.value.copy()
+    if sum(filler_items_distribution.values()) == 0:
+        filler_items_distribution = get_default_dict()
+
+    for filler_name in create_random_items(world, filler_items_distribution, _remaining):
+        create_item_unchecked(world, filler_name)
 
     world.multiworld.itempool += world.itempool
 
     return starting_items
+
+def create_random_items(world: "BurnoutParadiseRemasteredWorld", weights: dict[str, int], count: int) -> list[str]:
+    filler_pool = weights.copy()
+    return world.random.choices(population=list(filler_pool.keys()),
+                                weights=list(filler_pool.values()),
+                                k=count)
+
