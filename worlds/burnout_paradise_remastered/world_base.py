@@ -1,5 +1,4 @@
 from rule_builder.cached_world import CachedRuleBuilderWorld
-from worlds.AutoWorld import World
 from .options import BurnoutParadiseRemasteredOptions
 
 

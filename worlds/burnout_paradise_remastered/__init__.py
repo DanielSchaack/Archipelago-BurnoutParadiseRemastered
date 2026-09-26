@@ -6,16 +6,15 @@ from typing import ClassVar, Any
 
 from BaseClasses import Tutorial, Item
 from Utils import visualize_regions
-from rule_builder.rules import Has, HasFromList, HasFromListUnique
 from worlds.AutoWorld import WebWorld
 from . import locations, items
-from .constants import BURNOUT_PARADISE_REMASTERED, D_CLASS_WINS, BURNOUT_WINS, BURNOUT_ELITE_WINS, A_CLASS_WINS, B_CLASS_WINS, C_CLASS_WINS, AreaType, BreakableType
+from .constants import BURNOUT_PARADISE_REMASTERED, BURNOUT_WINS, BURNOUT_ELITE_WINS, A_CLASS_WINS, B_CLASS_WINS, C_CLASS_WINS, AreaType, BreakableType
 from .data.items import all_items, Events, Blockers, Discoverables
 from .data.items.cars import Cars
 from .data.items.events import BurningEvents
 from .data.locations import all_generated_locations, all_enum_locations, breakable_count_lookup
 from .data.rules.state_rules import HasEventWins
-from .options import burnout_paradise_remastered_option_groups, BurnoutParadiseRemasteredOptions, Goal, LicenseGoal
+from .options import burnout_paradise_remastered_option_groups, Goal, LicenseGoal
 from .world_base import BurnoutParadiseRemasteredBase
 from .items import BurnoutParadiseRemasteredItem
 
@@ -93,15 +92,15 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
     def generate_early(self) -> None:
         if self.options.goal == Goal.option_license_level:
             match self.options.license_goal:
-                case LicenseGoal.option_C_Class:
+                case LicenseGoal.option_c_class:
                     self.goal_event_wins = C_CLASS_WINS
-                case LicenseGoal.option_B_Class:
+                case LicenseGoal.option_b_class:
                     self.goal_event_wins = B_CLASS_WINS
-                case LicenseGoal.option_A_Class:
+                case LicenseGoal.option_a_class:
                     self.goal_event_wins = A_CLASS_WINS
-                case LicenseGoal.option_Burnout:
+                case LicenseGoal.option_burnout:
                     self.goal_event_wins = BURNOUT_WINS
-                case LicenseGoal.option_Burnout_Elite:
+                case LicenseGoal.option_burnout_elite:
                     self.goal_event_wins = BURNOUT_ELITE_WINS
 
         missing = {area.value for area in AreaType} - self.options.smash_counts.value.keys()
@@ -144,11 +143,11 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
     def connect_entrances(self) -> None:
         pass
 
-    def create_item(self, item: str) -> BurnoutParadiseRemasteredItem:
-        item_enum = self.item_lookup[item]
+    def create_item(self, name: str) -> BurnoutParadiseRemasteredItem:
+        item_enum = self.item_lookup[name]
 
         return BurnoutParadiseRemasteredItem(
-            item,
+            name,
             item_enum.classification,
             item_enum.item_id,
             self.player,

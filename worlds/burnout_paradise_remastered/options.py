@@ -2,7 +2,7 @@ from itertools import accumulate
 from functools import cached_property
 from dataclasses import dataclass
 
-from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, Range, OptionCounter, ItemDict
+from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, OptionCounter, ItemDict
 from .constants import AreaType
 
 
@@ -29,11 +29,11 @@ class LicenseGoal(Choice):
     **Burnout Elite** - 210 Event Wins
     """
     display_name = "License Goal"
-    option_C_Class = 0
-    option_B_Class = 1
-    option_A_Class = 2
-    option_Burnout = 3
-    option_Burnout_Elite = 4
+    option_c_class = 0
+    option_b_class = 1
+    option_a_class = 2
+    option_burnout = 3
+    option_burnout_elite = 4
     default = 1
 
 # class CarCollectionGoal(Range):
@@ -153,6 +153,7 @@ class DeathLink(Toggle):
     rich_text_doc = True
 
 
+# TODO: Make use of Filler.get_default_dict instead - currently causes import loop
 filler_item_default = {
     "Boost": 50,
 }
@@ -165,6 +166,8 @@ class FillerItemsDistribution(ItemDict):
         - **Boost** - Refills your Boost bar
     """
 
+    # default = get_default_dict()
+    # valid_keys = get_default_dict().keys()
     default = filler_item_default.copy()
     valid_keys = filler_item_default.copy().keys()
     min = 0

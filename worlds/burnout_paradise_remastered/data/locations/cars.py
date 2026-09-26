@@ -1,7 +1,6 @@
-from rule_builder.rules import False_, Has, True_
+from rule_builder.rules import Has
 from .. import LocationTypeEnum
 from ..items.cars import StartingCar, BurningCars
-from ..items.events import BurningEvents
 from ..regions.regions import Regions
 from ..rules.state_rules import HasEventWins
 

@@ -2,7 +2,6 @@ import dataclasses
 from typing import override
 
 from BaseClasses import CollectionState
-from NetUtils import JSONMessagePart
 from rule_builder.rules import Rule
 from ..items.cars import BurningCars
 from ...world_base import BurnoutParadiseRemasteredBase

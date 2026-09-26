@@ -3,7 +3,7 @@ from .cars import CarLocations
 from .events import EventLocations
 from .licenses import LicenseLocations
 from .. import GeneratedLocationData
-from ...constants import BreakableType, AreaType
+from ...constants import AreaType
 from ...data import LocationTypeEnum
 
 all_enum_locations: list[LocationTypeEnum] = [
