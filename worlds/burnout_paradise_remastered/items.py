@@ -8,21 +8,21 @@ from .data.items.events import Events, BurningEvents
 from .data.items.filler import Filler
 
 if TYPE_CHECKING:
-    from . import MinaTheHollowerWorld
+    from . import BurnoutParadiseRemasteredWorld
 
 
-def create_item(world: "MinaTheHollowerWorld", item: ItemData):
+def create_item(world: "BurnoutParadiseRemasteredWorld", item: ItemData):
     for i in range(item.amount):
         world.itempool.append(world.create_item(item.type.value))
 
 
-def create_single_item(world: "MinaTheHollowerWorld", item_type: ItemTypeEnum):
+def create_single_item(world: "BurnoutParadiseRemasteredWorld", item_type: ItemTypeEnum):
     world.itempool.append(world.create_item(item_type.value))
 
-def create_item_unchecked(world: "MinaTheHollowerWorld", item_value: str):
+def create_item_unchecked(world: "BurnoutParadiseRemasteredWorld", item_value: str):
     world.itempool.append(world.create_item(item_value))
 
-def create_items(world: "MinaTheHollowerWorld"):
+def create_items(world: "BurnoutParadiseRemasteredWorld"):
 
     starting_items: list[Item] = []
 
