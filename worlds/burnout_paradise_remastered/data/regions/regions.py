@@ -77,6 +77,6 @@ jump_regions = [
     Regions.WHITE_MOUNTAIN_SUPER_JUMPS,
     Regions.HARBOR_TOWN_SUPER_JUMPS,
     Regions.DOWNTOWN_PARADISE_SUPER_JUMPS,
-    Regions.BIG_SURF_ISLAND_MEGA_JUMPS,  # note Mega vs Super
+    Regions.BIG_SURF_ISLAND_MEGA_JUMPS,
 ]
 

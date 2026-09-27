@@ -3,4 +3,3 @@ from .. import BURNOUT_PARADISE_REMASTERED
 
 class BurnoutParadiseRemasteredTestBase(WorldTestBase):
     game = BURNOUT_PARADISE_REMASTERED
-    maxDiff = None
