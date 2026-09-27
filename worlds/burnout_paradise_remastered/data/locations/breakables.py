@@ -89,7 +89,7 @@ type_region_lookup = {
     },
 }
 
-def get_locations_for_breakable_option(breakable: BreakableType, area: AreaType, count, lock_option = 0):
+def get_locations_for_breakable_option(breakable: BreakableType, area: AreaType, count, lock_option = 0) -> list[GeneratedLocationData]:
     from ...options import BreakableLocks
     locs: list[GeneratedLocationData] = []
     count = count if count <= breakable_count_lookup[area.value][breakable] else breakable_count_lookup[area.value][breakable]
@@ -104,7 +104,7 @@ def get_locations_for_breakable_option(breakable: BreakableType, area: AreaType,
 
 
 # Duplicate to not cause import chains based on importing options
-def get_locations_for_breakable(breakable: BreakableType, area: AreaType, count):
+def get_locations_for_breakable(breakable: BreakableType, area: AreaType, count) -> list[GeneratedLocationData]:
     locs: list[GeneratedLocationData] = []
     count = count if count <= breakable_count_lookup[area.value][breakable] else breakable_count_lookup[area.value][breakable]
     for num in range(count):

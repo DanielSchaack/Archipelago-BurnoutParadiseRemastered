@@ -105,7 +105,7 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
                 case LicenseGoal.option_burnout_elite:
                     self.goal_event_wins = BURNOUT_ELITE_WINS
 
-        for missing in {area.value for area in AreaType} - self.options.smash_counts.value.keys():
+        for missing in sorted({area.value for area in AreaType} - self.options.smash_counts.value.keys()):
             self.options.smash_counts.value[missing] = 0
 
         for area_name, value in self.options.smash_counts.value.items():
@@ -113,14 +113,14 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
                 self.options.smash_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.SMASH]
 
 
-        for missing in {area.value for area in AreaType} - self.options.billboard_counts.value.keys():
+        for missing in sorted({area.value for area in AreaType} - self.options.billboard_counts.value.keys()):
             self.options.billboard_counts.value[missing] = 0
 
         for area_name, value in self.options.billboard_counts.value.items():
             if value > breakable_count_lookup[area_name][BreakableType.BILLBOARD]:
                 self.options.billboard_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.BILLBOARD]
 
-        for missing in {area.value for area in AreaType} - self.options.super_jump_counts.value.keys():
+        for missing in sorted({area.value for area in AreaType} - self.options.super_jump_counts.value.keys()):
             self.options.super_jump_counts.value[missing] = 0
 
         for area_name, value in self.options.super_jump_counts.value.items():

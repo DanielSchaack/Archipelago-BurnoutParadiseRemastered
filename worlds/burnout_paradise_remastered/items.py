@@ -33,13 +33,9 @@ def create_items(world: "BurnoutParadiseRemasteredWorld"):
 
     starting_items.append(world.create_item(StartingCar.HUNTER_CAVALRY.value))
 
-    starting_events = set(world.random.sample(list(Events), 5))
-
-
-    for event in starting_events:
-        starting_items.append(world.create_item(event.value))
-
-    remaining_events = set(Events) - starting_events
+    starting_events = list(world.random.sample(list(Events), 5))
+    starting_items.extend(world.create_item(e.value) for e in starting_events)
+    remaining_events = [e for e in Events if e not in starting_events]
 
     match world.options.breakable_locks:
         case BreakableLocks.option_locked_by_area:
