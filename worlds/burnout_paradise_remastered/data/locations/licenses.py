@@ -1,7 +1,7 @@
 from .. import LocationTypeEnum
 from ..regions.regions import Regions
 from ..rules.state_rules import HasEventWins
-from ...constants import *
+from ...constants import LOCATIONS_OFFSET_LICENSES, D_CLASS_WINS, C_CLASS_WINS, B_CLASS_WINS, A_CLASS_WINS, BURNOUT_WINS, BURNOUT_ELITE_WINS
 
 
 class LicenseLocations(LocationTypeEnum):

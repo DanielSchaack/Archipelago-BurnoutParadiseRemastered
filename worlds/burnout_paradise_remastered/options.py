@@ -1,7 +1,10 @@
+from itertools import accumulate
+from functools import cached_property
 from dataclasses import dataclass
 
-from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, Range, OptionCounter
+from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, OptionCounter, ItemDict, StartInventoryPool
 from .constants import AreaType
+from .data.items.filler import get_default_dict
 
 
 class Goal(Choice):
@@ -27,11 +30,11 @@ class LicenseGoal(Choice):
     **Burnout Elite** - 210 Event Wins
     """
     display_name = "License Goal"
-    option_C_Class = 0
-    option_B_Class = 1
-    option_A_Class = 2
-    option_Burnout = 3
-    option_Burnout_Elite = 4
+    option_c_class = 0
+    option_b_class = 1
+    option_a_class = 2
+    option_burnout = 3
+    option_burnout_elite = 4
     default = 1
 
 # class CarCollectionGoal(Range):
@@ -43,14 +46,22 @@ class LicenseGoal(Choice):
 #     range_end = 75
 #     default = 0
 
-class BreakableLocks(Toggle):
+class BreakableLocks(Choice):
     """
     Lock each area's Sanity checks behind an item?
 
     This reduces sphere 1 down to a small amount of checks, which can help progression balancing.
 
     Recommended if you have sanity options turned up.
+
+    **All Unlocked From The Start** - All Smashes, Billboards and Super/Mega Jumps are available from the Start
+    **Locked By Area** - Smashes, Billboards and Super/Mega Jumps are locked behind regional items, all 3 types becoming available all at once per area
+    **Locked By Area And Type** - Smashes, Billboards and Super/Mega Jumps are locked behind individual regional items, becoming available per area per type
     """
+    option_all_unlocked_from_the_start = 0
+    option_locked_by_area = 1
+    option_locked_by_area_and_type = 2
+    default = 0
     display_name = "Lock Breakables"
     rich_text_doc = True
 
@@ -143,9 +154,28 @@ class DeathLink(Toggle):
     rich_text_doc = True
 
 
+class FillerItemsDistribution(ItemDict):
+    """
+    Change the weights of each filler
+
+    Valid Options:
+        - **Boost** - Refills your Boost bar
+    """
+
+    default = get_default_dict()
+    valid_keys = get_default_dict().keys()
+    min = 0
+    display_name = "Filler Weights"
+
+    @cached_property
+    def weights_pair(self) -> dict[str, int]:
+        return dict(zip(self.value.keys(), accumulate(self.value.values()), strict=False))
+
+
 burnout_paradise_remastered_option_groups= [
     OptionGroup("Game Options", [
-        DeathLink
+        DeathLink,
+        FillerItemsDistribution
     ]),
     OptionGroup("Goal Options", [
         Goal,
@@ -162,6 +192,7 @@ burnout_paradise_remastered_option_groups= [
 
 @dataclass
 class BurnoutParadiseRemasteredOptions(PerGameCommonOptions):
+    start_inventory_from_pool: StartInventoryPool
     deathlink: DeathLink
     goal: Goal
     license_goal: LicenseGoal
@@ -170,3 +201,4 @@ class BurnoutParadiseRemasteredOptions(PerGameCommonOptions):
     smash_counts: SmashSanityCounts
     billboard_counts: BillboardSanityCounts
     super_jump_counts: SuperJumpSanityCounts
+    filler_items_distribution: FillerItemsDistribution

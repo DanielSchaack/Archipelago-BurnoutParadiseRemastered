@@ -98,4 +98,4 @@ class BurningCars(ItemTypeEnum):
 
 
 
-    
+
