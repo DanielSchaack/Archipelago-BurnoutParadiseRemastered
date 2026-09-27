@@ -2,7 +2,7 @@ from itertools import chain
 import json
 import os
 from importlib.resources import files
-from typing import ClassVar, Any
+from typing import ClassVar, Any, Mapping
 
 from BaseClasses import Tutorial, Item
 from Utils import visualize_regions
@@ -78,6 +78,8 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         return slot_data
 
     def __init__(self, multiworld, player):
+        self.debug_regions = False
+
         self.regions: set[str] = set()
         self.itempool: list[Item] = []
         self.starting_items:list[Item] = []
@@ -103,29 +105,23 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
                 case LicenseGoal.option_burnout_elite:
                     self.goal_event_wins = BURNOUT_ELITE_WINS
 
-        missing = {area.value for area in AreaType} - self.options.smash_counts.value.keys()
-
-        if missing:
-            raise ValueError(f"Smash Sanity Missing Area values: {missing}")
+        for missing in {area.value for area in AreaType} - self.options.smash_counts.value.keys():
+            self.options.smash_counts.value[missing] = 0
 
         for area_name, value in self.options.smash_counts.value.items():
             if value > breakable_count_lookup[area_name][BreakableType.SMASH]:
                 self.options.smash_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.SMASH]
 
 
-        missing = {area.value for area in AreaType} - self.options.billboard_counts.value.keys()
-
-        if missing:
-            raise ValueError(f"Billboard Sanity Missing Area values: {missing}")
+        for missing in {area.value for area in AreaType} - self.options.billboard_counts.value.keys():
+            self.options.billboard_counts.value[missing] = 0
 
         for area_name, value in self.options.billboard_counts.value.items():
             if value > breakable_count_lookup[area_name][BreakableType.BILLBOARD]:
                 self.options.billboard_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.BILLBOARD]
 
-        missing = {area.value for area in AreaType} - self.options.super_jump_counts.value.keys()
-
-        if missing:
-            raise ValueError(f"Super Jump Sanity Missing Area values: {missing}")
+        for missing in {area.value for area in AreaType} - self.options.super_jump_counts.value.keys():
+            self.options.super_jump_counts.value[missing] = 0
 
         for area_name, value in self.options.super_jump_counts.value.items():
             if value > breakable_count_lookup[area_name][BreakableType.SUPER_JUMP]:
@@ -174,17 +170,16 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
 
 
     def generate_output(self, output_directory: str):
-        print("Generating Output")
-        visualize_regions(
-            self.multiworld.get_region("Menu", self.player),
-            file_name=os.path.join(output_directory, f"Player{self.player}_output.puml"),
-            show_entrance_names=True,
-            regions_to_highlight=self.multiworld.get_all_state(
-                self.player
-            ).reachable_regions[self.player],
-        )
+        if self.debug_regions:
+            print("Generating Output")
+            visualize_regions(
+                self.multiworld.get_region("Menu", self.player),
+                file_name=os.path.join(output_directory, f"Player{self.player}_output.puml"),
+                show_entrance_names=True,
+                regions_to_highlight=self.multiworld.get_all_state().reachable_regions[self.player],
+            )
 
-    def fill_slot_data(self) -> id:
+    def fill_slot_data(self) -> Mapping[str, Any]:
         return {
             "sem_ver": self.manifest["mod_version"],
             "goal_config": self.options.goal.value,
