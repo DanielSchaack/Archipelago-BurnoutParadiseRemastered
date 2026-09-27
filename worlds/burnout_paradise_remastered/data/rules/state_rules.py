@@ -1,21 +1,22 @@
 import dataclasses
-from typing import override
+from typing import override, TYPE_CHECKING
 
 from BaseClasses import CollectionState
 from rule_builder.rules import Rule
 from ..items.cars import BurningCars
-from ...world_base import BurnoutParadiseRemasteredBase
 from ..items.events import Events, BurningEvents
 from ...constants import BURNOUT_PARADISE_REMASTERED
 
+if TYPE_CHECKING:
+    from ...world_base import BurnoutParadiseRemasteredBase
 
 
 @dataclasses.dataclass(kw_only=True)
-class HasEventWins(Rule[BurnoutParadiseRemasteredBase], game=BURNOUT_PARADISE_REMASTERED):
+class HasEventWins(Rule["BurnoutParadiseRemasteredBase"], game=BURNOUT_PARADISE_REMASTERED):
     wins: int
 
     @override
-    def _instantiate(self, world: BurnoutParadiseRemasteredBase) -> Rule.Resolved:
+    def _instantiate(self, world: "BurnoutParadiseRemasteredBase") -> Rule.Resolved:
         # caching_enabled only needs to be passed in when your world inherits from CachedRuleBuilderWorld
         return self.Resolved(wins=self.wins, player=world.player, caching_enabled=False)
 

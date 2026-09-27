@@ -19,6 +19,6 @@ all_generated_locations: list[GeneratedLocationData] = [
     for location in get_locations_for_breakable(
         breakable_type,
         AreaType(area_name),
-        count,
+        count
     )
 ]

@@ -4,9 +4,10 @@ from typing import TYPE_CHECKING
 from BaseClasses import Location, Region, EntranceType
 from .options import BreakableLocks
 from .data import RegionTypeEnum, GeneratedLocationData
-from .data.locations import all_generated_locations, get_locations_for_breakable, EventLocations, LicenseLocations
+from .data.locations import EventLocations, LicenseLocations
 from .data.locations.cars import CarLocations
-from .data.regions.entrances import Entrances, base_entrances, smash_entrances, billboard_entrances, jump_entrances, breakable_entrances
+from .data.locations.breakables import get_locations_for_breakable_option
+from .data.regions.entrances import base_entrances, smash_entrances, billboard_entrances, jump_entrances, breakable_entrances
 from .data.regions.regions import Regions, smash_regions, billboard_regions, jump_regions, areas, breakable_regions
 from .constants import BreakableType, AreaType
 
@@ -71,17 +72,17 @@ def create_regions(world: "BurnoutParadiseRemasteredWorld"):
          ))
 
     for area_name, value in world.options.smash_counts.value.items():
-        generated_locs = get_locations_for_breakable(BreakableType.SMASH, AreaType(area_name), value, world.options.breakable_locks.value)
+        generated_locs = get_locations_for_breakable_option(BreakableType.SMASH, AreaType(area_name), value, world.options.breakable_locks.value)
         for _location in generated_locs:
             locations_by_region[_location.region].append(_location)
 
     for area_name, value in world.options.billboard_counts.value.items():
-        generated_locs = get_locations_for_breakable(BreakableType.BILLBOARD, AreaType(area_name), value, world.options.breakable_locks.value)
+        generated_locs = get_locations_for_breakable_option(BreakableType.BILLBOARD, AreaType(area_name), value, world.options.breakable_locks.value)
         for _location in generated_locs:
             locations_by_region[_location.region].append(_location)
 
     for area_name, value in world.options.super_jump_counts.value.items():
-        generated_locs = get_locations_for_breakable(BreakableType.SUPER_JUMP, AreaType(area_name), value, world.options.breakable_locks.value)
+        generated_locs = get_locations_for_breakable_option(BreakableType.SUPER_JUMP, AreaType(area_name), value, world.options.breakable_locks.value)
         for _location in generated_locs:
             locations_by_region[_location.region].append(_location)
 

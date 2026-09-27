@@ -1,7 +1,6 @@
 from .. import GeneratedLocationData
 from ..regions.regions import Regions
 from ...constants import AreaType, BreakableType, LOCATIONS_OFFSET_BREAKABLES
-from ...options import BreakableLocks
 
 breakable_count_lookup = {
     AreaType.DOWNTOWN_PARADISE.value : {
@@ -90,7 +89,8 @@ type_region_lookup = {
     },
 }
 
-def get_locations_for_breakable(breakable: BreakableType, area: AreaType, count, lock_option = 0):
+def get_locations_for_breakable_option(breakable: BreakableType, area: AreaType, count, lock_option = 0):
+    from ...options import BreakableLocks
     locs: list[GeneratedLocationData] = []
     count = count if count <= breakable_count_lookup[area.value][breakable] else breakable_count_lookup[area.value][breakable]
     for num in range(count):
@@ -103,3 +103,15 @@ def get_locations_for_breakable(breakable: BreakableType, area: AreaType, count,
     return locs
 
 
+# Duplicate to not cause import chains based on importing options
+def get_locations_for_breakable(breakable: BreakableType, area: AreaType, count):
+    locs: list[GeneratedLocationData] = []
+    count = count if count <= breakable_count_lookup[area.value][breakable] else breakable_count_lookup[area.value][breakable]
+    for num in range(count):
+        name = f"{area.value} {'Mega Jump' if area == AreaType.BIG_SURF_ISLAND and breakable == BreakableType.SUPER_JUMP else name_lookup[breakable]} {num+1}"
+        region = region_lookup[area]
+        locs.append(GeneratedLocationData(
+            name = name,
+            location_id=LOCATIONS_OFFSET_BREAKABLES + (1000 * area.index) + (100 * breakable.value) + num,
+            region=region))
+    return locs

@@ -1,13 +1,14 @@
 from typing import TYPE_CHECKING
 
 from BaseClasses import Item
-from .options import BreakableLocks, filler_item_default
+from .options import BreakableLocks
 from .constants import BURNOUT_PARADISE_REMASTERED
 from .data import ItemTypeEnum, ItemData
 from .data.items.blockers import Blockers
 from .data.items.discoverables import Discoverables
 from .data.items.cars import Cars, StartingCar, BurningCars
 from .data.items.events import Events
+from .data.items.filler import get_default_dict
 
 if TYPE_CHECKING:
     from . import BurnoutParadiseRemasteredWorld
@@ -61,8 +62,7 @@ def create_items(world: "BurnoutParadiseRemasteredWorld"):
 
     filler_items_distribution = world.options.filler_items_distribution.value.copy()
     if sum(filler_items_distribution.values()) == 0:
-        # filler_items_distribution = get_default_dict() # TODO:
-        filler_items_distribution = filler_item_default
+        filler_items_distribution = get_default_dict()
 
     for filler_name in create_random_items(world, filler_items_distribution, _remaining):
         create_item_unchecked(world, filler_name)

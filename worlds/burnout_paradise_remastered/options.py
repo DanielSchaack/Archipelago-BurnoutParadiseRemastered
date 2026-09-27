@@ -2,8 +2,9 @@ from itertools import accumulate
 from functools import cached_property
 from dataclasses import dataclass
 
-from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, OptionCounter, ItemDict
+from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, OptionCounter, ItemDict, StartInventoryPool
 from .constants import AreaType
+from .data.items.filler import get_default_dict
 
 
 class Goal(Choice):
@@ -153,11 +154,6 @@ class DeathLink(Toggle):
     rich_text_doc = True
 
 
-# TODO: Make use of Filler.get_default_dict instead - currently causes import loop
-filler_item_default = {
-    "Boost": 50,
-}
-
 class FillerItemsDistribution(ItemDict):
     """
     Change the weights of each filler
@@ -166,10 +162,8 @@ class FillerItemsDistribution(ItemDict):
         - **Boost** - Refills your Boost bar
     """
 
-    # default = get_default_dict()
-    # valid_keys = get_default_dict().keys()
-    default = filler_item_default.copy()
-    valid_keys = filler_item_default.copy().keys()
+    default = get_default_dict()
+    valid_keys = get_default_dict().keys()
     min = 0
     display_name = "Filler Weights"
 
@@ -180,7 +174,8 @@ class FillerItemsDistribution(ItemDict):
 
 burnout_paradise_remastered_option_groups= [
     OptionGroup("Game Options", [
-        DeathLink
+        DeathLink,
+        FillerItemsDistribution
     ]),
     OptionGroup("Goal Options", [
         Goal,
@@ -197,6 +192,7 @@ burnout_paradise_remastered_option_groups= [
 
 @dataclass
 class BurnoutParadiseRemasteredOptions(PerGameCommonOptions):
+    start_inventory_from_pool: StartInventoryPool
     deathlink: DeathLink
     goal: Goal
     license_goal: LicenseGoal

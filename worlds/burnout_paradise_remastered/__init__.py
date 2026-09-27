@@ -63,8 +63,8 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
     item_name_groups: ClassVar[dict[str, set[str]]] = {
         "Car": {car.value for car in Cars},
         "Event": {event.value for event in Events},
-        "Burning Route": {event.value for event in BurningEvents},
-        "Any Event": {e.value for e in chain(Events, BurningEvents)},
+        # "Burning Route": {event.value for event in BurningEvents}, Not used, cars unlock those
+        "Any Event": {e.value for e in chain(Events, Cars)},
         "Area Breakable": {area.value for area in Blockers},
         "Area Discoverable": {discoverable.value for discoverable in Discoverables},
     }
