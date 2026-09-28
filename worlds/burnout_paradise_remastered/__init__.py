@@ -186,6 +186,7 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
             "license_goal": self.options.license_goal.value,
             # "car_goal_count": self.options.car_goal.value,
             "breakable_locks" : self.options.breakable_locks.value,
+            "starting_event_amount" : self.options.starting_event_amount.value,
             "smash_sanity": self.options.smash_counts.value,
             "billboard_sanity": self.options.billboard_counts.value,
             "super_jump_sanity": self.options.super_jump_counts.value,

@@ -33,7 +33,7 @@ def create_items(world: "BurnoutParadiseRemasteredWorld"):
 
     starting_items.append(world.create_item(StartingCar.HUNTER_CAVALRY.value))
 
-    starting_events = list(world.random.sample(list(Events), 5))
+    starting_events = list(world.random.sample(list(Events), world.options.starting_event_amount.value))
     starting_items.extend(world.create_item(e.value) for e in starting_events)
     remaining_events = [e for e in Events if e not in starting_events]
 

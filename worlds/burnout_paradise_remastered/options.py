@@ -2,7 +2,7 @@ from itertools import accumulate
 from functools import cached_property
 from dataclasses import dataclass
 
-from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, OptionCounter, ItemDict, StartInventoryPool
+from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, OptionCounter, ItemDict, StartInventoryPool, Range
 from .constants import AreaType
 from .data.items.filler import get_default_dict
 
@@ -64,6 +64,16 @@ class BreakableLocks(Choice):
     default = 0
     display_name = "Lock Breakables"
     rich_text_doc = True
+
+
+class StartingEventAmount(Range):
+    """
+    With how many random events do you want to start with?
+    """
+    display_name = "Starting Event Amount"
+    range_start = 0
+    range_end = 85
+    default = 5
 
 
 smash_sanity_default = {
@@ -175,6 +185,7 @@ class FillerItemsDistribution(ItemDict):
 burnout_paradise_remastered_option_groups= [
     OptionGroup("Game Options", [
         DeathLink,
+        StartingEventAmount,
         FillerItemsDistribution
     ]),
     OptionGroup("Goal Options", [
@@ -198,6 +209,7 @@ class BurnoutParadiseRemasteredOptions(PerGameCommonOptions):
     license_goal: LicenseGoal
     # car_goal: CarCollectionGoal
     breakable_locks: BreakableLocks
+    starting_event_amount: StartingEventAmount
     smash_counts: SmashSanityCounts
     billboard_counts: BillboardSanityCounts
     super_jump_counts: SuperJumpSanityCounts
