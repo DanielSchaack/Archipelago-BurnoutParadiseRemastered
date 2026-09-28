@@ -10,7 +10,7 @@ from worlds.AutoWorld import WebWorld
 from . import locations, items
 from .constants import BURNOUT_PARADISE_REMASTERED, BURNOUT_WINS, BURNOUT_ELITE_WINS, A_CLASS_WINS, B_CLASS_WINS, C_CLASS_WINS, AreaType, BreakableType
 from .data.items import all_items, Events, Blockers, Discoverables
-from .data.items.cars import Cars
+from .data.items.cars import Cars, BurningCars
 from .data.items.events import BurningEvents
 from .data.locations import all_generated_locations, all_enum_locations, breakable_count_lookup
 from .data.rules.state_rules import HasEventWins
@@ -64,7 +64,7 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         "Car": {car.value for car in Cars},
         "Event": {event.value for event in Events},
         # "Burning Route": {event.value for event in BurningEvents}, Not used, cars unlock those
-        "Any Event": {e.value for e in chain(Events, Cars)},
+        "Any Event": {e.value for e in chain(Events, BurningCars)},
         "Area Breakable": {area.value for area in Blockers},
         "Area Discoverable": {discoverable.value for discoverable in Discoverables},
     }
