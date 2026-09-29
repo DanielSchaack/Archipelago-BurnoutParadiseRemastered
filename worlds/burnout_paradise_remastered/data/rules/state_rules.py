@@ -4,7 +4,7 @@ from typing import override, TYPE_CHECKING
 from BaseClasses import CollectionState
 from rule_builder.rules import Rule
 from ..items.cars import BurningCars
-from ..items.events import Events, BurningEvents
+from ..items.events import Events
 from ...constants import BURNOUT_PARADISE_REMASTERED
 
 if TYPE_CHECKING:
@@ -66,7 +66,7 @@ class HasEventWins(Rule["BurnoutParadiseRemasteredBase"], game=BURNOUT_PARADISE_
         def item_dependencies(self) -> dict[str, set[int]]:
             return {
                 **{item.value: {id(self)} for item in Events},
-                **{item.value: {id(self)} for item in BurningEvents}
+                **{item.value: {id(self)} for item in BurningCars}
             }
 
         @override
