@@ -14,10 +14,10 @@ class Cars(ItemTypeEnum):
 
     NAKAMURA_IKUSA_SAMURAI = ("Nakamura Ikusa Samurai", 0xD38DAEE966C20, ItemClassification.useful)
     NAKAMURA_CARBON_IKUSA_GT = ("Nakamura Carbon Ikusa GT", 0x59504DAA96298, ItemClassification.useful)  # added
-    NAKAMURA_IKUSA_GT_BZ = ("Nakamura B'Z Ikusa GT ", 0xA798843603C00, ItemClassification.useful)  # added
+    # NAKAMURA_IKUSA_GT_BZ = ("Nakamura B'Z Ikusa GT ", 0xA798843603C00, ItemClassification.useful)  # added
 
     KITANO_HYDROS_TECHNO = ("Kitano Hydros Techno", 0xD38DAC870CC20, ItemClassification.useful)
-    KITANO_HYDROS_MICROMANIA_CUSTOM = ("Kitano Hydros Micromania Custom", 0xA798C34D34570, ItemClassification.useful)  # added
+    # KITANO_HYDROS_MICROMANIA_CUSTOM = ("Kitano Hydros Micromania Custom", 0xA798C34D34570, ItemClassification.useful)  # added
     KITANO_CARBON_HYDROS_CUSTOM = ("Kitano Carbon Hydros Custom", 0x59504DAB6F4B7, ItemClassification.useful)  # added
 
     HUNTER_RELIABLE_SPECIAL = ("Hunter Reliable Special", 0xD676C3D7F1F8E, ItemClassification.useful)
@@ -35,13 +35,13 @@ class Cars(ItemTypeEnum):
     # HIPPY_VAN = ("Hippy Van", 0xA566020D0000D, ItemClassification.useful)
     CARSON_INFERNO_BRT_VAN = ("Carson Inferno BRT Van", 0xD676C4256CDF4, ItemClassification.useful)
 
-    TEMPESTA_DREAM = ("Tempesta Dream", 0xA5234FBC86D60, ItemClassification.useful)
+    # TEMPESTA_DREAM = ("Tempesta Dream", 0xA5234FBC86D60, ItemClassification.useful)
     ROSSOLINI_TEMPESTA_GT = ("Rossolini Tempesta GT", 0xD424F1A1F5870, ItemClassification.useful)
     CARSON_OPUS_XS = ("Carson Opus XS", 0xD676F93B0B220, ItemClassification.useful)
     CARSON_ANNIHILATOR_PHOENIX = ("Carson Annihilator Phoenix", 0xD676FB773F820, ItemClassification.useful)
     JANSEN_XS12 = ("Jansen XS12", 0xA59402A920C20, ItemClassification.useful)
     KITANO_TOUGE_CRITERION = ("Kitano Touge Criterion", 0xD38DB0D94FE20, ItemClassification.useful)
-    KITANO_GAMESTOP_SPORT = ("Kitano Gamespot Sport", 0xA7989E674C7C0, ItemClassification.useful)  # added
+    # KITANO_GAMESTOP_SPORT = ("Kitano Gamespot Sport", 0xA7989E674C7C0, ItemClassification.useful)  # added
 
     HUNTER_TAKEDOWN_DIRT_RACER = ("Hunter Takedown Dirt Racer", 0xD677100787C20, ItemClassification.useful)
     CARSON_RACING_500_GT = ("Carson Racing 500 GT", 0xD6771AC21CC20, ItemClassification.useful)
@@ -49,7 +49,7 @@ class Cars(ItemTypeEnum):
     # OVAL_STEEL_RACER = ("Oval Steel Racer", 0xA566038412870, ItemClassification.useful)  # sponsor?
     HUNTER_BRT_OVAL_CHAMP = ("Hunter BRT Oval Champ", 0xD6771C65BAA20, ItemClassification.useful)
 
-    TIGER_GT = ("Tiger GT", 0xA5235AA8AE1CF, ItemClassification.useful)
+    # TIGER_GT = ("Tiger GT", 0xA5235AA8AE1CF, ItemClassification.useful)
     CARSON_GT_FLAME = ("Carson GT Flame", 0xD676FBC38AC20, ItemClassification.useful)
     HUNTER_CIVILIAN = ("Hunter Civilian", 0xD676C166913B4, ItemClassification.useful)
     WATSON_REVENGE_RACER = ("Watson Revenge Racer", 0xD424EDF0A1220, ItemClassification.useful)
