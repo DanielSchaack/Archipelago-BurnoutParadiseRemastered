@@ -37,8 +37,6 @@ class HasEventWins(Rule["BurnoutParadiseRemasteredBase"], game=BURNOUT_PARADISE_
                 [item.value for item in BurningCars],
                 self.player
             )
-            #starting car has a burning event
-            burning_event_count += 1
 
             remaining_wins = self.wins
             remaining_burning_events = burning_event_count

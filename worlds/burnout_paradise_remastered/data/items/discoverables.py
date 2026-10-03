@@ -24,7 +24,7 @@ class Discoverables(ItemTypeEnum):
         DOWNTOWN_PARADISE_BILLBOARDS = (f"{AreaType.DOWNTOWN_PARADISE.value} Breakable {name_lookup[BreakableType.BILLBOARD]}s", ITEMS_OFFSET_BREAKABLES + 10 * AreaType.DOWNTOWN_PARADISE.index + BreakableType.BILLBOARD.value, ItemClassification.progression)
         DOWNTOWN_PARADISE_SUPER_JUMPS = (f"{AreaType.DOWNTOWN_PARADISE.value} {name_lookup[BreakableType.SUPER_JUMP]}s", ITEMS_OFFSET_BREAKABLES + 10 * AreaType.DOWNTOWN_PARADISE.index + BreakableType.SUPER_JUMP.value, ItemClassification.progression)
 
-        BIG_SURF_ISLAND_SMASHES = (f"{AreaType.BIG_SURF_ISLAND.value} Breakable {name_lookup[BreakableType.SMASH]}es", ITEMS_OFFSET_BREAKABLES + AreaType.BIG_SURF_ISLAND.index + 10 * BreakableType.SMASH.value, ItemClassification.progression)
-        BIG_SURF_ISLAND_BILLBOARDS = (f"{AreaType.BIG_SURF_ISLAND.value} Breakable {name_lookup[BreakableType.BILLBOARD]}s", ITEMS_OFFSET_BREAKABLES + AreaType.BIG_SURF_ISLAND.index + 10 * BreakableType.BILLBOARD.value, ItemClassification.progression)
+        BIG_SURF_ISLAND_SMASHES = (f"{AreaType.BIG_SURF_ISLAND.value} Breakable {name_lookup[BreakableType.SMASH]}es", ITEMS_OFFSET_BREAKABLES + 10 * AreaType.BIG_SURF_ISLAND.index + BreakableType.SMASH.value, ItemClassification.progression)
+        BIG_SURF_ISLAND_BILLBOARDS = (f"{AreaType.BIG_SURF_ISLAND.value} Breakable {name_lookup[BreakableType.BILLBOARD]}s", ITEMS_OFFSET_BREAKABLES + 10 * AreaType.BIG_SURF_ISLAND.index + BreakableType.BILLBOARD.value, ItemClassification.progression)
         BIG_SURF_ISLAND_MEGA_JUMPS = (f"{AreaType.BIG_SURF_ISLAND.value} Mega Jumps", ITEMS_OFFSET_BREAKABLES + 10 * AreaType.BIG_SURF_ISLAND.index + BreakableType.SUPER_JUMP, ItemClassification.progression)
 

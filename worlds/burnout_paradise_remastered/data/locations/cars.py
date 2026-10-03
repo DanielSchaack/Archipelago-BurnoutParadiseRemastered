@@ -1,13 +1,13 @@
 from rule_builder.rules import Has
 from .. import LocationTypeEnum
-from ..items.cars import StartingCar, BurningCars
+from ..items.cars import BurningCars
 from ..regions.regions import Regions
 from ..rules.state_rules import HasEventWins
 
 
 class CarLocations(LocationTypeEnum):
-    OVAL_CHAMP_69 = ("Burning Route Car Unlock - Hunter Oval Champ 69", 0xD676FB5119E20, Regions.DOWNTOWN_PARADISE, Has(StartingCar.HUNTER_CAVALRY.value))
-    MESQUITE = ("Car Takedown Unlock - Hunter Mesquite", 0xA7E5D4F26592D, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=2))
+    OVAL_CHAMP_69 = ("Burning Route Car Unlock - Hunter Oval Champ 69", 0xD676FB5119E20, Regions.DOWNTOWN_PARADISE, Has(BurningCars.HUNTER_CAVALRY.value))
+    MESQUITE = ("License Gift - Hunter Mesquite", 0xA7E5D4F26592D, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=2))
     MESQUITE_CUSTOM = ("Burning Route Car Unlock - Hunter Mesquite Custom", 0xD676F97EFEC34, Regions.DOWNTOWN_PARADISE, Has(BurningCars.HUNTER_MESQUITE.value))
     SI_7 = ("Car Takedown Unlock - Nakamura SI-7", 0xA4FCC11A5567C, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=3))
     RACING_SI_7 = ("Burning Route Car Unlock - Nakamura Racing SI-7", 0xD38DAEEA988B4, Regions.DOWNTOWN_PARADISE, Has(BurningCars.NAKAMURA_SI_7.value))
@@ -15,21 +15,19 @@ class CarLocations(LocationTypeEnum):
     VEGAS_CARNIVALE = ("Burning Route Car Unlock - Hunter Vegas Carnivale", 0xD676C159EDC20, Regions.DOWNTOWN_PARADISE, Has(BurningCars.HUNTER_VEGAS.value))
     PIONEER = ("Car Takedown Unlock - Krieger Pioneer", 0xA59406A49B160, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=7))
     PIONEER_SUPER_GATOR = ("Burning Route Car Unlock - Krieger Pioneer Super Gator", 0xD424F47F18A20, Regions.DOWNTOWN_PARADISE, Has(BurningCars.KRIEGER_PIONEER.value))
-    IKUSA_GT = ("Car Takedown Unlock - Nakamura Ikusa GT", 0xA4FCC10EE9360, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=9))
-    # NAKAMURA_CARBON_IKUSA_GT = ("Car Takedown Unlock - carbon ikusa gt", Regions.DOWNTOWN_PARADISE, 0x59504DAA96298, True_()) #HARD
+    IKUSA_GT = ("License Gift - Nakamura Ikusa GT", 0xA4FCC10EE9360, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=9))
     IKUSA_SAMURAI = ("Burning Route Car Unlock - Nakamura Ikusa Samurai", 0xD38DAEE966C20, Regions.DOWNTOWN_PARADISE, Has(BurningCars.NAKAMURA_IKUSA_GT.value))
     HYDROS_CUSTOM = ("Car Takedown Unlock - Kitano Hydros Custom", 0xA4FCBEB7FB67C, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=10))
     HYDROS_TECHNO = ("Burning Route Car Unlock - Kitano Hydros Techno", 0xD38DAC870CC20, Regions.DOWNTOWN_PARADISE, Has(BurningCars.KITANO_HYDROS_CUSTOM.value))
-    # KITANO_CARBON_HYDROS_CUSTOM = ("Car Takedown Unlock - kitano carbon hydros custom", Regions.DOWNTOWN_PARADISE, 0x59504DAB6F4B7, True_()) #HARD
     RELIABLE_CUSTOM = ("Car Takedown Unlock - Hunter Reliable Custom", 0xA7E5D607EFD60, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=13))
     RELIABLE_SPECIAL = ("Burning Route Car Unlock - Hunter Reliable Special", 0xD676C3D7F1F8E, Regions.DOWNTOWN_PARADISE, Has(BurningCars.HUNTER_RELIABLE_CUSTOM.value))
     R_TURBO_ROADSTER = ("Car Takedown Unlock - Watson R-Turbo Roadster", 0xA593A0B813960, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=16))
-    BURNOUT_ROADSTER = ("Burning Route Car Unlock - Watson Burnout Roadster", 0xD4248E9278B80, Regions.DOWNTOWN_PARADISE, Has(BurningCars.WATSON_R_TURBO_ROADSTER.value))
+    BURNOUT_ROADSTER = ("Burning Route Car Unlock - Watson R-Turbo Roadster", 0xD4248E9278B80, Regions.DOWNTOWN_PARADISE, Has(BurningCars.WATSON_R_TURBO_ROADSTER.value))
     LM_CLASSIC = ("Car Takedown Unlock - Rossolini LM Classic", 0xA593DB9421760, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=19))
     LM_TRACK_PACKAGE = ("Burning Route Car Unlock - Rossolini LM Track Package", 0xD424C965533F4, Regions.DOWNTOWN_PARADISE, Has(BurningCars.ROSSOLINI_LM_CLASSIC.value))
     MANHATTAN = ("Car Takedown Unlock - Hunter Manhattan", 0xA7E5CD898F360, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=22))
     MANHATTAN_CUSTOM = ("Burning Route Car Unlock - Hunter Manhattan Custom", 0xD676BB640CC20, Regions.DOWNTOWN_PARADISE, Has(BurningCars.HUNTER_MANHATTAN.value))
-    FASTBACK = ("Car Takedown Unlock - Carson Fastback", 0xA7E60D533AB80, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=24))
+    FASTBACK = ("License Gift - Carson Fastback", 0xA7E60D533AB80, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=24))
     FASTBACK_SPECIAL = ("Burning Route Car Unlock - Carson Fastback Special", 0xD676FF9BF8EB0, Regions.DOWNTOWN_PARADISE, Has(BurningCars.CARSON_FASTBACK.value))
     GRAND_MARAIS = ("Car Takedown Unlock - Carson Grand Marais", 0xA7E5EB0AA8F60, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=26))
     GRAND_SICILIAN = ("Burning Route Car Unlock - Carson Grand Sicilian", 0xA7E5EB1526820, Regions.DOWNTOWN_PARADISE, Has(BurningCars.CARSON_GRAND_MARAIS.value))
@@ -44,10 +42,8 @@ class CarLocations(LocationTypeEnum):
     P12 = ("Car Takedown Unlock - Jansen P12", 0xA7E632DD80360, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=46))
     P12_TRACK_PACKAGE = ("Burning Route Car Unlock - Jansen P12 Track Package", 0xD67720B7FDC20, Regions.DOWNTOWN_PARADISE, Has(BurningCars.JANSEN_P12.value))
     INFERNO_VAN = ("Car Takedown Unlock - Carson Inferno Van", 0xA7E5D6543B160, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=41))
-    # HIPPY_VAN = ("Car Takedown Unlock - hippy van", 0xA566020D0000D, Regions.DOWNTOWN_PARADISE, False_())
     INFERNO_BRT_VAN = ("Burning Route Car Unlock - Carson Inferno BRT Van", 0xD676C4256CDF4, Regions.DOWNTOWN_PARADISE, Has(BurningCars.CARSON_INFERNO_VAN.value))
-    TEMPESTA = ("Car Takedown Unlock - Rossolini Tempesta", 0xA59403CFD6508, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=50))
-    # TEMPESTA_DREAM = ("Car Takedown Unlock - tempesta dream", 0xA5234FBC86D60, Regions.DOWNTOWN_PARADISE, False_())
+    TEMPESTA = ("License Gift - Rossolini Tempesta", 0xA59403CFD6508, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=50))
     TEMPESTA_GT = ("Burning Route Car Unlock - Rossolini Tempesta GT", 0xD424F1A1F5870, Regions.DOWNTOWN_PARADISE, Has(BurningCars.ROSSOLINI_TEMPESTA.value))
     OPUS = ("Car Takedown Unlock - Carson Opus", 0xA7E60B608D960, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=56))
     OPUS_XS = ("Burning Route Car Unlock - Carson Opus XS", 0xD676F93B0B220, Regions.DOWNTOWN_PARADISE, Has(BurningCars.CARSON_OPUS.value))
@@ -62,10 +58,8 @@ class CarLocations(LocationTypeEnum):
     _500_GT = ("Car Takedown Unlock - Carson 500 GT", 0xA7E62CE79F360, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=83))
     RACING_500_GT = ("Burning Route Car Unlock - Carson Racing 500 GT", 0xD6771AC21CC20, Regions.DOWNTOWN_PARADISE, Has(BurningCars.CARSON_500_GT.value))
     RACING_OVAL_CHAMP = ("Car Takedown Unlock - Hunter Racing Oval Champ", 0xA7E62E8B3D160, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=89))
-    # OVAL_STEEL_RACER = ("Car Takedown Unlock - oval steel racer", 0xA566038412870, Regions.DOWNTOWN_PARADISE, False_())
     BRT_OVAL_CHAMP = ("Burning Route Car Unlock - Hunter BRT Oval Champ", 0xD6771C65BAA20, Regions.DOWNTOWN_PARADISE, Has(BurningCars.HUNTER_RACING_OVAL_CHAMP.value))
-    GT_CONCEPT = ("Car Takedown Unlock - Carson GT Concept", 0xA7E60F1A4C858, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=90))
-    # TIGER_GT = ("Car Takedown Unlock - tiger gt", 0xA5235AA8AE1CF, Regions.DOWNTOWN_PARADISE, False_())
+    GT_CONCEPT = ("License Gift - Carson GT Concept", 0xA7E60F1A4C858, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=90))
     GT_FLAME = ("Burning Route Car Unlock - Carson GT Flame", 0xD676FBC38AC20, Regions.DOWNTOWN_PARADISE, Has(BurningCars.CARSON_GT_CONCEPT.value))
     CITIZEN = ("Car Takedown Unlock - Hunter Citizen", 0xA7E5D3964E17C, Regions.DOWNTOWN_PARADISE, HasEventWins(wins=98))
     CIVILIAN = ("Burning Route Car Unlock - Hunter Civilian", 0xD676C166913B4, Regions.DOWNTOWN_PARADISE, Has(BurningCars.HUNTER_CITIZEN.value))
