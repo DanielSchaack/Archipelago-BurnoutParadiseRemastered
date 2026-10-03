@@ -94,7 +94,7 @@ def get_locations_for_breakable_option(breakable: BreakableType, area: AreaType,
     locs: list[GeneratedLocationData] = []
     count = count if count <= breakable_count_lookup[area.value][breakable] else breakable_count_lookup[area.value][breakable]
     for num in range(count):
-        name = f"{area.value} {'Mega Jump' if area == AreaType.BIG_SURF_ISLAND and breakable == BreakableType.SUPER_JUMP else name_lookup[breakable]} {num+1}"
+        name = f"{area.value} - {'Mega Jump' if area == AreaType.BIG_SURF_ISLAND and breakable == BreakableType.SUPER_JUMP else name_lookup[breakable]} {num+1}"
         region = type_region_lookup[area][breakable] if lock_option == BreakableLocks.option_locked_by_area_and_type else region_lookup[area]
         locs.append(GeneratedLocationData(
             name = name,
@@ -108,7 +108,7 @@ def get_locations_for_breakable(breakable: BreakableType, area: AreaType, count)
     locs: list[GeneratedLocationData] = []
     count = count if count <= breakable_count_lookup[area.value][breakable] else breakable_count_lookup[area.value][breakable]
     for num in range(count):
-        name = f"{area.value} {'Mega Jump' if area == AreaType.BIG_SURF_ISLAND and breakable == BreakableType.SUPER_JUMP else name_lookup[breakable]} {num+1}"
+        name = f"{area.value} - {'Mega Jump' if area == AreaType.BIG_SURF_ISLAND and breakable == BreakableType.SUPER_JUMP else name_lookup[breakable]} {num+1}"
         region = region_lookup[area]
         locs.append(GeneratedLocationData(
             name = name,

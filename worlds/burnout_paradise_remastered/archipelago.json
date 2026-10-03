@@ -1,9 +1,10 @@
 {
     "game": "Burnout Paradise Remastered",
-    "world_version": "0.1.1",
-    "mod_version": "0.1.0",
+    "world_version": "0.2.0",
+    "mod_version": "0.2.0",
     "minimum_ap_version": "0.6.7",
     "authors": [
-        "FyreDay"
+        "FyreDay",
+        "Schaackii"
     ]
 }

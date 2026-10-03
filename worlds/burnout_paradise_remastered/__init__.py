@@ -10,9 +10,9 @@ from worlds.AutoWorld import WebWorld
 from . import locations, items
 from .constants import BURNOUT_PARADISE_REMASTERED, BURNOUT_WINS, BURNOUT_ELITE_WINS, A_CLASS_WINS, B_CLASS_WINS, C_CLASS_WINS, AreaType, BreakableType
 from .data.items import all_items, Events, Blockers, Discoverables
-from .data.items.cars import Cars
-from .data.items.events import BurningEvents
-from .data.locations import all_generated_locations, all_enum_locations, breakable_count_lookup
+from .data.items.cars import Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars, ParadiseBikes, OnlineCars
+from .data.items.liveries import ParadiseCarsLivery
+from .data.locations import all_generated_locations, all_enum_locations, breakable_count_lookup, EventLocations
 from .data.rules.state_rules import HasEventWins
 from .options import burnout_paradise_remastered_option_groups, Goal, LicenseGoal
 from .world_base import BurnoutParadiseRemasteredBase
@@ -61,10 +61,28 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
     }
 
     item_name_groups: ClassVar[dict[str, set[str]]] = {
-        "Car": {car.value for car in Cars},
-        "Event": {event.value for event in Events},
-        # "Burning Route": {event.value for event in BurningEvents}, Not used, cars unlock those
-        "Any Event": {e.value for e in chain(Events, Cars)},
+        "Car": {car.value for car in chain(Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars)},
+        "Bike": {bike.value for bike in chain(ParadiseBikes, [ToyCars.NAKAMURA_TOY_FIREHAWK_GP]) },
+        "Paradise Car": {car.value for car in chain(Cars, BurningCars)},
+        "Toy Car": {car.value for car in ToyCars},
+        "Legendary Car": {car.value for car in LegendaryCars},
+        "Boost Special Car": {car.value for car in BoostSpecialCars},
+        "Cop Car": {car.value for car in CopCars},
+        "Big Surf Island Car": {car.value for car in BigSurfIslandCars},
+        "Online Car": {car.value for car in OnlineCars},
+        "Livery": {livery.value for livery in ParadiseCarsLivery},
+        "Regular Event": {event.value for event in Events},
+        "Burning Route Event": { car.value for car in BurningCars },
+        "Race Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.value.startswith("Win the Race - ") },
+        "Stunt Run Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.value.startswith("Win the Stunt Run - ") },
+        "Road Rage Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.value.startswith("Win the Road Rage - ") },
+        "Marked Man Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.value.startswith("Win the Marked Man - ") },
+        f"{AreaType.PALM_BAY_HEIGHTS.value} Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.region.value == AreaType.PALM_BAY_HEIGHTS.value },
+        f"{AreaType.HARBOR_TOWN.value} Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.region.value == AreaType.HARBOR_TOWN.value },
+        f"{AreaType.SILVER_LAKE.value} Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.region.value == AreaType.SILVER_LAKE.value },
+        f"{AreaType.WHITE_MOUNTAIN.value} Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.region.value == AreaType.WHITE_MOUNTAIN.value },
+        f"{AreaType.DOWNTOWN_PARADISE.value} Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.region.value == AreaType.DOWNTOWN_PARADISE.value },
+        "Any Event": {e.value for e in chain(Events, BurningCars)},
         "Area Breakable": {area.value for area in Blockers},
         "Area Discoverable": {discoverable.value for discoverable in Discoverables},
     }
@@ -186,11 +204,14 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
             "license_goal": self.options.license_goal.value,
             # "car_goal_count": self.options.car_goal.value,
             "breakable_locks" : self.options.breakable_locks.value,
+            "starter_car" : self.options.starter_car.value,
+            "starting_event_amount" : self.options.starting_event_amount.value,
+            "add_livery_items" : self.options.add_livery_items.value,
             "smash_sanity": self.options.smash_counts.value,
             "billboard_sanity": self.options.billboard_counts.value,
             "super_jump_sanity": self.options.super_jump_counts.value,
             "death_link": self.options.deathlink.value,
-
+            "death_link_amnesty": self.options.deathlink_amnesty.value,
         }
 
 

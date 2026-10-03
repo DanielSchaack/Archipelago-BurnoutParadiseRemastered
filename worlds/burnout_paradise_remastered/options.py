@@ -2,7 +2,7 @@ from itertools import accumulate
 from functools import cached_property
 from dataclasses import dataclass
 
-from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, OptionCounter, ItemDict, StartInventoryPool
+from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, OptionCounter, ItemDict, StartInventoryPool, Range
 from .constants import AreaType
 from .data.items.filler import get_default_dict
 
@@ -64,6 +64,65 @@ class BreakableLocks(Choice):
     default = 0
     display_name = "Lock Breakables"
     rich_text_doc = True
+
+class StarterCar(Choice):
+    """
+    With what car are you starting with?
+    """
+    option_hunter_cavalry = 0
+    option_hunter_mesquite = 1
+    option_nakamura_si_7 = 2
+    option_hunter_vegas = 3
+    option_krieger_pioneer = 4
+    option_nakamura_ikusa_gt = 5
+    option_kitano_hydros_custom = 6
+    option_hunter_reliable_custom = 7
+    option_watson_r_turbo_roadster = 8
+    option_rossolini_lm_classic = 9
+    option_hunter_manhattan = 10
+    option_carson_fastback = 11
+    option_carson_grand_marais = 12
+    option_montgomery_hyperion = 13
+    option_krieger_616_sport = 14
+    option_hunter_spur = 15
+    option_montgomery_gt_2400 = 16
+    option_jansen_p12 = 17
+    option_carson_inferno_van = 18
+    option_rossolini_tempesta = 19
+    option_carson_opus = 20
+    option_carson_annihilator = 21
+    option_jansen_x12 = 22
+    option_kitano_touge_sport = 23
+    option_hunter_takedown_4x4 = 24
+    option_carson_500_gt = 25
+    option_hunter_racing_oval_champ = 26
+    option_carson_gt_concept = 27
+    option_hunter_citizen = 28
+    option_watson_25_v16_revenge = 29
+    option_montgomery_hawker = 30
+    option_krieger_uberschall_8 = 31
+    option_carson_thunder_custom = 32
+    option_carson_hot_rod_coupe = 33
+    option_krieger_racing_wtr = 34
+
+    default = 0
+    display_name = "Starter Car"
+    rich_text_doc = True
+
+class StartingEventAmount(Range):
+    """
+    With how many random events do you want to start with?
+    """
+    display_name = "Starting Event Amount"
+    range_start = 0
+    range_end = 85
+    default = 5
+
+class AddLiveryItems(Toggle):
+    """
+    If enabled, adds cars' additional liveries as items. Otherwise they are unlocked upon receiving the car.
+    """
+    display_name = "Add Car Liveries As Items"
 
 
 smash_sanity_default = {
@@ -153,6 +212,19 @@ class DeathLink(Toggle):
     display_name = "Death Link"
     rich_text_doc = True
 
+class DeathLinkAmnesty(Range):
+    """
+    Number of deaths you require to send a death link.
+    Only applies when deathlink is enabled.
+
+    An amnesty of 1 sends every crash a death, an amnesty of 2 sends every other crash, amnesty of 3 sends every 3rd crash and so on.
+    """
+    range_start = 1
+    range_end = 30
+    default = 10
+    display_name = "Death Link Amnesty"
+    rich_text_doc = True
+
 
 class FillerItemsDistribution(ItemDict):
     """
@@ -175,12 +247,18 @@ class FillerItemsDistribution(ItemDict):
 burnout_paradise_remastered_option_groups= [
     OptionGroup("Game Options", [
         DeathLink,
-        FillerItemsDistribution
+        DeathLinkAmnesty,
     ]),
     OptionGroup("Goal Options", [
         Goal,
         LicenseGoal,
         # CarCollectionGoal,
+    ]),
+    OptionGroup("Item Options", [
+        StarterCar,
+        StartingEventAmount,
+        AddLiveryItems,
+        FillerItemsDistribution
     ]),
     OptionGroup("Sanity Options", [
         BreakableLocks,
@@ -194,10 +272,14 @@ burnout_paradise_remastered_option_groups= [
 class BurnoutParadiseRemasteredOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
     deathlink: DeathLink
+    deathlink_amnesty: DeathLinkAmnesty
     goal: Goal
     license_goal: LicenseGoal
     # car_goal: CarCollectionGoal
     breakable_locks: BreakableLocks
+    starter_car: StarterCar
+    starting_event_amount: StartingEventAmount
+    add_livery_items: AddLiveryItems
     smash_counts: SmashSanityCounts
     billboard_counts: BillboardSanityCounts
     super_jump_counts: SuperJumpSanityCounts
