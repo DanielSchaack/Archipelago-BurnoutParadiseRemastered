@@ -1,3 +1,4 @@
+from worlds.burnout_paradise_remastered.data.items.drivethrus import DriveThrus
 from .cars import Cars, BurningCars, CarbonCars, ParadiseBikes, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars, OnlineCars
 from .liveries import ParadiseCarsLivery, ParadiseBikesLivery
 from ...data import ItemTypeEnum
@@ -22,5 +23,6 @@ all_items: list[ItemTypeEnum] = [
     *Events,
     *ParadiseCarsLivery,
     *ParadiseBikesLivery,
+    *DriveThrus,
     *Filler
 ]

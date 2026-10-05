@@ -1,3 +1,4 @@
+from rule_builder.rules import Has, HasGroup
 from itertools import chain
 import json
 import os
@@ -8,13 +9,14 @@ from BaseClasses import Tutorial, Item
 from Utils import visualize_regions
 from worlds.AutoWorld import WebWorld
 from . import locations, items
-from .constants import BURNOUT_PARADISE_REMASTERED, BURNOUT_WINS, BURNOUT_ELITE_WINS, A_CLASS_WINS, B_CLASS_WINS, C_CLASS_WINS, AreaType, BreakableType
-from .data.items import all_items, Events, Blockers, Discoverables
+from .constants import BURNOUT_PARADISE_REMASTERED, BURNOUT_WINS, BURNOUT_ELITE_WINS, A_CLASS_WINS, B_CLASS_WINS, C_CLASS_WINS, AreaType, BreakableType, WinType
+from .data import BoostType
+from .data.items import all_items, Events, Blockers, Discoverables, DriveThrus
 from .data.items.cars import Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars, ParadiseBikes, OnlineCars
 from .data.items.liveries import ParadiseCarsLivery
 from .data.locations import all_generated_locations, all_enum_locations, breakable_count_lookup, EventLocations
 from .data.rules.state_rules import HasEventWins
-from .options import burnout_paradise_remastered_option_groups, Goal, LicenseGoal
+from .options import burnout_paradise_remastered_option_groups, LicenseGoal
 from .world_base import BurnoutParadiseRemasteredBase
 from .items import BurnoutParadiseRemasteredItem
 
@@ -61,18 +63,42 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
     }
 
     item_name_groups: ClassVar[dict[str, set[str]]] = {
-        "Car": {car.value for car in chain(Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars)},
+        "Car": {car.value for car in chain(Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars, OnlineCars)},
         "Bike": {bike.value for bike in chain(ParadiseBikes, [ToyCars.NAKAMURA_TOY_FIREHAWK_GP]) },
-        "Paradise Car": {car.value for car in chain(Cars, BurningCars)},
+        "Paradise Car": {car.value for car in chain(Cars, BurningCars, CarbonCars)},
         "Toy Car": {car.value for car in ToyCars},
         "Legendary Car": {car.value for car in LegendaryCars},
         "Boost Special Car": {car.value for car in BoostSpecialCars},
         "Cop Car": {car.value for car in CopCars},
         "Big Surf Island Car": {car.value for car in BigSurfIslandCars},
         "Online Car": {car.value for car in OnlineCars},
+        "Speed Car": {
+            car.value for car in chain(
+                Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars,
+                BoostSpecialCars, CopCars, BigSurfIslandCars, OnlineCars
+            ) if car.boosttype == BoostType.SPEED
+        },
+        "Crash Car": {
+            car.value for car in chain(
+                Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars,
+                BoostSpecialCars, CopCars, BigSurfIslandCars, OnlineCars
+            ) if car.boosttype == BoostType.CRASH
+        },
+        "Stunt Car": {
+            car.value for car in chain(
+                Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars,
+                BoostSpecialCars, CopCars, BigSurfIslandCars, OnlineCars
+            ) if car.boosttype == BoostType.STUNT
+        },
+        "Special Car": {
+            car.value for car in chain(
+                Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars,
+                BoostSpecialCars, CopCars, BigSurfIslandCars, OnlineCars, ParadiseBikes
+            ) if car.boosttype == BoostType.SPECIAL
+        },
         "Livery": {livery.value for livery in ParadiseCarsLivery},
         "Regular Event": {event.value for event in Events},
-        "Burning Route Event": { car.value for car in BurningCars },
+        "Burning Route Event": {car.value for car in BurningCars},
         "Race Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.value.startswith("Win the Race - ") },
         "Stunt Run Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.value.startswith("Win the Stunt Run - ") },
         "Road Rage Event": { loc.value.split(" - ", 1)[1] for loc in EventLocations if loc.value.startswith("Win the Road Rage - ") },
@@ -85,6 +111,7 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         "Any Event": {e.value for e in chain(Events, BurningCars)},
         "Area Breakable": {area.value for area in Blockers},
         "Area Discoverable": {discoverable.value for discoverable in Discoverables},
+        "Any Jump Point": {drivethru.value for drivethru in DriveThrus},
     }
 
     item_lookup = {item.value: item for item in all_items}
@@ -110,18 +137,17 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         super().__init__(multiworld, player)
 
     def generate_early(self) -> None:
-        if self.options.goal == Goal.option_license_level:
-            match self.options.license_goal:
-                case LicenseGoal.option_c_class:
-                    self.goal_event_wins = C_CLASS_WINS
-                case LicenseGoal.option_b_class:
-                    self.goal_event_wins = B_CLASS_WINS
-                case LicenseGoal.option_a_class:
-                    self.goal_event_wins = A_CLASS_WINS
-                case LicenseGoal.option_burnout:
-                    self.goal_event_wins = BURNOUT_WINS
-                case LicenseGoal.option_burnout_elite:
-                    self.goal_event_wins = BURNOUT_ELITE_WINS
+        match self.options.license_goal:
+            case LicenseGoal.option_c_class:
+                self.goal_event_wins = C_CLASS_WINS
+            case LicenseGoal.option_b_class:
+                self.goal_event_wins = B_CLASS_WINS
+            case LicenseGoal.option_a_class:
+                self.goal_event_wins = A_CLASS_WINS
+            case LicenseGoal.option_burnout:
+                self.goal_event_wins = BURNOUT_WINS
+            case LicenseGoal.option_burnout_elite:
+                self.goal_event_wins = BURNOUT_ELITE_WINS
 
         for missing in sorted({area.value for area in AreaType} - self.options.smash_counts.value.keys()):
             self.options.smash_counts.value[missing] = 0
@@ -138,12 +164,54 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
             if value > breakable_count_lookup[area_name][BreakableType.BILLBOARD]:
                 self.options.billboard_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.BILLBOARD]
 
+
         for missing in sorted({area.value for area in AreaType} - self.options.super_jump_counts.value.keys()):
             self.options.super_jump_counts.value[missing] = 0
 
         for area_name, value in self.options.super_jump_counts.value.items():
             if value > breakable_count_lookup[area_name][BreakableType.SUPER_JUMP]:
                 self.options.super_jump_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.SUPER_JUMP]
+
+
+        for missing in sorted({area.value for area in AreaType} - self.options.drive_thru_counts.value.keys()):
+            self.options.drive_thru_counts.value[missing] = 0
+
+        for area_name, value in self.options.drive_thru_counts.value.items():
+            if value > breakable_count_lookup[area_name][BreakableType.DRIVETHRU]:
+                self.options.drive_thru_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.DRIVETHRU]
+
+
+        for missing in sorted({area.value for area in AreaType} - self.options.road_rule_time_count.value.keys()):
+            self.options.road_rule_time_count.value[missing] = 0
+
+        for area_name, value in self.options.road_rule_time_count.value.items():
+            if value > breakable_count_lookup[area_name][BreakableType.ROADRULE_TIME]:
+                self.options.road_rule_time_count.value[area_name] = breakable_count_lookup[area_name][BreakableType.ROADRULE_TIME]
+
+
+        for missing in sorted({area.value for area in AreaType} - self.options.road_rule_showtime_count.value.keys()):
+            self.options.road_rule_showtime_count.value[missing] = 0
+
+        for area_name, value in self.options.road_rule_showtime_count.value.items():
+            if value > breakable_count_lookup[area_name][BreakableType.ROADRULE_SHOWTIME]:
+                self.options.road_rule_showtime_count.value[area_name] = breakable_count_lookup[area_name][BreakableType.ROADRULE_SHOWTIME]
+
+
+        for missing in sorted({area.value for area in AreaType} - self.options.road_rule_bike_day_count.value.keys()):
+            self.options.road_rule_bike_day_count.value[missing] = 0
+
+        for area_name, value in self.options.road_rule_bike_day_count.value.items():
+            if value > breakable_count_lookup[area_name][BreakableType.ROADRULE_BIKES_DAY]:
+                self.options.road_rule_bike_day_count.value[area_name] = breakable_count_lookup[area_name][BreakableType.ROADRULE_BIKES_DAY]
+
+
+        for missing in sorted({area.value for area in AreaType} - self.options.road_rule_bike_night_count.value.keys()):
+            self.options.road_rule_bike_night_count.value[missing] = 0
+
+        for area_name, value in self.options.road_rule_bike_night_count.value.items():
+            if value > breakable_count_lookup[area_name][BreakableType.ROADRULE_BIKES_NIGHT]:
+                self.options.road_rule_bike_night_count.value[area_name] = breakable_count_lookup[area_name][BreakableType.ROADRULE_BIKES_NIGHT]
+
 
         self.is_ut = (hasattr(self.multiworld, "re_gen_passthrough")
                       and isinstance(self.multiworld.re_gen_passthrough, dict)
@@ -159,13 +227,7 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
 
     def create_item(self, name: str) -> BurnoutParadiseRemasteredItem:
         item_enum = self.item_lookup[name]
-
-        return BurnoutParadiseRemasteredItem(
-            name,
-            item_enum.classification,
-            item_enum.item_id,
-            self.player,
-        )
+        return items.create_item(self, item_enum)
 
     def create_items(self):
         self.starting_items = items.create_items(self)
@@ -178,13 +240,21 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         return items.create_random_items( self, self.options.filler_items_distribution.default, 1)[0]
 
     def set_rules(self):
-        # if self.options.goal.value == self.options.goal.option_collect_cars:
-        #     self.set_completion_rule(HasFromListUnique(
-        #         *(item.value for item in Cars),
-        #         count=self.options.car_goal.value
-        #     ))
-        if self.options.goal.value == Goal.option_license_level:
-            self.set_completion_rule(HasEventWins(wins=self.goal_event_wins))
+        goal = HasEventWins(wins=self.goal_event_wins)
+        goal &= HasGroup("Paradise Car", count=self.options.car_goal.value)
+        uw = self.options.unique_event_win_goals
+        event_map = {
+            WinType.BURNING_ROUTE_WINS.value: "Burning Route Event",
+            WinType.RACE_WINS.value:          "Race Event",
+            WinType.STUNT_RUN_WINS.value:     "Stunt Run Event",
+            WinType.ROAD_RAGE_WINS.value:     "Road Rage Event",
+            WinType.MARKED_MAN_WINS.value:    "Marked Man Event",
+        }
+        for win_type in WinType:
+            name = event_map[win_type.value]
+            count = min(uw.get(win_type.value, 0), win_type.maximum)
+            goal &= HasGroup(name, count=count)
+        self.set_completion_rule(goal)
 
 
     def generate_output(self, output_directory: str):
@@ -200,18 +270,33 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
     def fill_slot_data(self) -> Mapping[str, Any]:
         return {
             "sem_ver": self.manifest["mod_version"],
-            "goal_config": self.options.goal.value,
             "license_goal": self.options.license_goal.value,
-            # "car_goal_count": self.options.car_goal.value,
+            "car_goal_count": self.options.car_goal.value,
+            "unique_event_win_goals": self.options.unique_event_win_goals.value,
             "breakable_locks" : self.options.breakable_locks.value,
             "starter_car" : self.options.starter_car.value,
             "starting_event_amount" : self.options.starting_event_amount.value,
             "add_livery_items" : self.options.add_livery_items.value,
+            "unique_car_wins": self.options.unique_car_wins.value,
             "smash_sanity": self.options.smash_counts.value,
             "billboard_sanity": self.options.billboard_counts.value,
             "super_jump_sanity": self.options.super_jump_counts.value,
+            "drive_thru_counts": self.options.drive_thru_counts.value,
+            "road_rule_time_count": self.options.road_rule_time_count.value,
+            "road_rule_showtime_count": self.options.road_rule_showtime_count.value,
+            "road_rule_bike_day_count": self.options.road_rule_bike_day_count.value,
+            "road_rule_bike_night_count": self.options.road_rule_bike_night_count.value,
             "death_link": self.options.deathlink.value,
             "death_link_amnesty": self.options.deathlink_amnesty.value,
+            "use_what_you_get": self.options.use_what_you_get.value,
+            "add_legendary_cars": self.options.add_legendary_cars.value,
+            "add_online_cars": self.options.add_online_cars.value,
+            "add_boost_special_cars": self.options.add_boost_special_cars.value,
+            "add_toy_cars": self.options.add_toy_cars.value,
+            "add_pcpd_cars": self.options.add_pcpd_cars.value,
+            "add_big_surf_island_cars": self.options.add_big_surf_island_cars.value,
+            "add_paradise_bikes": self.options.add_paradise_bikes.value,
+            "add_drive_thru_jump_points": self.options.add_drive_thru_jump_points.value,
         }
 
 
@@ -225,12 +310,26 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
 
         self.options.deathlink.value = slot_data["death_link"]
 
-        self.options.goal.value = slot_data["goal_config"]
         self.options.license_goal.value = slot_data["license_goal"]
+        self.options.car_goal.value = slot_data["car_goal_count"]
+        self.options.unique_event_win_goals.value = slot_data["unique_event_win_goals"]
         self.options.breakable_locks.value = slot_data["breakable_locks"]
-        # self.options.car_goal.value = slot_data["car_goal_count"]
+        self.options.unique_car_wins.value = slot_data["unique_car_wins"]
         self.options.smash_counts.value = slot_data["smash_sanity"]
         self.options.billboard_counts.value = slot_data["billboard_sanity"]
         self.options.super_jump_counts.value = slot_data["super_jump_sanity"]
+        self.options.drive_thru_counts.value = slot_data["drive_thru_counts"]
+        self.options.road_rule_time_count.value = slot_data["road_rule_time_count"]
+        self.options.road_rule_showtime_count.value = slot_data["road_rule_showtime_count"]
+        self.options.road_rule_bike_day_count.value = slot_data["road_rule_bike_day_count"]
+        self.options.road_rule_bike_night_count.value = slot_data["road_rule_bike_night_count"]
+        self.options.add_legendary_cars.value = slot_data["add_legendary_cars"]
+        self.options.add_online_cars.value = slot_data["add_online_cars"]
+        self.options.add_boost_special_cars.value = slot_data["add_boost_special_cars"]
+        self.options.add_toy_cars.value = slot_data["add_toy_cars"]
+        self.options.add_pcpd_cars.value = slot_data["add_pcpd_cars"]
+        self.options.add_big_surf_island_cars.value = slot_data["add_big_surf_island_cars"]
+        self.options.add_paradise_bikes.value = slot_data["add_paradise_bikes"]
+        self.options.add_drive_thru_jump_points.value = slot_data["add_drive_thru_jump_points"]
 
         return slot_data

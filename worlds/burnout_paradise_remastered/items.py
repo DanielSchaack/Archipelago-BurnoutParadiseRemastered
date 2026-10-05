@@ -1,12 +1,13 @@
+from worlds.burnout_paradise_remastered.data.items.drivethrus import DriveThrus
 from typing import TYPE_CHECKING
 
-from BaseClasses import Item
+from BaseClasses import Item, ItemClassification
 from .options import BreakableLocks
 from .constants import BURNOUT_PARADISE_REMASTERED
-from .data import ItemTypeEnum, ItemData
+from .data import ItemTypeEnum
 from .data.items.blockers import Blockers
 from .data.items.discoverables import Discoverables
-from .data.items.cars import Cars, BurningCars, _BURNING_CARS_IN_ORDER, CarbonCars, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars, ParadiseBikes
+from .data.items.cars import Cars, BurningCars, _BURNING_CARS_IN_ORDER, CarbonCars, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars, ParadiseBikes, OnlineCars, get_car_names, get_paradise_car_names
 from .data.items.liveries import ParadiseCarsLivery, ParadiseBikesLivery
 from .data.items.events import Events
 from .data.items.filler import get_default_dict
@@ -17,10 +18,19 @@ if TYPE_CHECKING:
 class BurnoutParadiseRemasteredItem(Item):
     game: str = BURNOUT_PARADISE_REMASTERED
 
-def create_item(world: "BurnoutParadiseRemasteredWorld", item: ItemData):
-    for _ in range(item.amount):
-        world.itempool.append(world.create_item(item.type.value))
+def create_item(world: "BurnoutParadiseRemasteredWorld", item: ItemTypeEnum):
+    classification = item.classification
+    if world.options.car_goal.value and item.value in get_paradise_car_names():
+        classification = ItemClassification.progression
+    if world.options.unique_car_wins.value and item.value in get_car_names():
+        classification = ItemClassification.progression
 
+    return BurnoutParadiseRemasteredItem(
+        item.value,
+        classification,
+        item.item_id,
+        world.player,
+    )
 
 def create_single_item(world: "BurnoutParadiseRemasteredWorld", item_type: ItemTypeEnum):
     world.itempool.append(world.create_item(item_type.value))
@@ -58,23 +68,44 @@ def create_items(world: "BurnoutParadiseRemasteredWorld"):
         create_single_item(world, item_type)
     for item_type in CarbonCars:
         create_single_item(world, item_type)
-    for item_type in ToyCars:
-        create_single_item(world, item_type)
-    for item_type in LegendaryCars:
-        create_single_item(world, item_type)
-    for item_type in BoostSpecialCars:
-        create_single_item(world, item_type)
-    for item_type in CopCars:
-        create_single_item(world, item_type)
-    for item_type in BigSurfIslandCars:
-        create_single_item(world, item_type)
-    for item_type in ParadiseBikes:
-        create_single_item(world, item_type)
+
+    if world.options.add_toy_cars.value:
+        for item_type in ToyCars:
+            create_single_item(world, item_type)
+
+    if world.options.add_legendary_cars.value:
+        for item_type in LegendaryCars:
+            create_single_item(world, item_type)
+
+    if world.options.add_boost_special_cars.value:
+        for item_type in BoostSpecialCars:
+            create_single_item(world, item_type)
+
+    if world.options.add_pcpd_cars.value:
+        for item_type in CopCars:
+            create_single_item(world, item_type)
+
+    if world.options.add_big_surf_island_cars.value:
+        for item_type in BigSurfIslandCars:
+            create_single_item(world, item_type)
+
+    if world.options.add_online_cars.value:
+        for item_type in OnlineCars:
+            create_single_item(world, item_type)
+
+    if world.options.add_paradise_bikes.value:
+        for item_type in ParadiseBikes:
+            create_single_item(world, item_type)
 
     if world.options.add_livery_items.value:
         for item_type in ParadiseCarsLivery:
             create_single_item(world, item_type)
-        for item_type in ParadiseBikesLivery:
+        if world.options.add_paradise_bikes.value:
+            for item_type in ParadiseBikesLivery:
+                create_single_item(world, item_type)
+
+    if world.options.add_drive_thru_jump_points.value:
+        for item_type in DriveThrus:
             create_single_item(world, item_type)
 
     total_location_count = len(world.multiworld.get_unfilled_locations(world.player))

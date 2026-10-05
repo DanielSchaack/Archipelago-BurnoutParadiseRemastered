@@ -75,7 +75,6 @@ class ParadiseCarsLivery(ItemTypeEnum):
     HUNTER_OLYMPUS = ("Hunter Olympus Car Liveries", 2081, ItemClassification.filler)
     NAKAMURA_RAI_JIN_TURBO = ("Nakamura Rai-Jin Turbo Car Liveries", 2082, ItemClassification.filler)
 
-# Not included yet
 class ParadiseBikesLivery(ItemTypeEnum):
     NAKAMURA_FV1100 = ("Nakamura FV1100 Liveries", 2077, ItemClassification.filler)
     NAKAMURA_FV1100_TI = ("Nakamura FV1100-TI Liveries", 2078, ItemClassification.filler)

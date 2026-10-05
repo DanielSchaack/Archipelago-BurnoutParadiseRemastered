@@ -18,6 +18,17 @@ class ItemTypeEnum(Enum):
         self.item_id = item_id
         self.classification = classification
 
+class BoostType(Enum):
+    SPECIAL = "Special"
+    SPEED = "Speed"
+    CRASH = "Crash"
+    STUNT = "Stunt"
+
+class CarItemTypeEnum(ItemTypeEnum):
+    def __init__( self, value: str, item_id: int, classification: ItemClassification, boosttype: BoostType,):
+        super().__init__(value, item_id, classification)
+        self.boosttype = boosttype
+
 @dataclass
 class ItemData:
     type: ItemTypeEnum
