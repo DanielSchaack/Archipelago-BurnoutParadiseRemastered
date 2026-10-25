@@ -45,15 +45,17 @@ def create_items(world: "BurnoutParadiseRemasteredWorld"):
 
     starter_car = _BURNING_CARS_IN_ORDER[world.options.starter_car.value]
     starting_items.append(world.create_item(starter_car.value))
-    remaining_cars = chain([c for c in world.event_items if c != starter_car and c in BURNING_CAR_TO_BURNING_ROUTE_UNLOCK], world.added_cars)
-    for item_type in remaining_cars:
-        create_single_item(world, item_type)
 
     paradise_city_events = [e for e in world.event_items if e != starter_car and e in chain(BurningCars, RaceEvents, StuntRunEvents, RoadRageEvents, MarkedManEvents)]
     starting_events = list(world.random.sample(paradise_city_events, world.options.starting_event_amount.value))
     starting_items.extend(world.create_item(e.value) for e in starting_events)
-    remaining_events = [e for e in world.event_items if e not in starting_events]
-    for item_type in remaining_events:
+
+    for item_type in world.event_items:
+        if item_type == starter_car or item_type in starting_events:
+            continue
+        create_single_item(world, item_type)
+
+    for item_type in world.added_cars:
         create_single_item(world, item_type)
 
     o = world.options
