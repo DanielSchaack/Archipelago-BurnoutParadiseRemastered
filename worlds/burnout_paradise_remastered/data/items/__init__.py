@@ -1,15 +1,16 @@
-from .cars import Cars, BurningCars, CarbonCars, ParadiseBikes, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars, OnlineCars
+from worlds.burnout_paradise_remastered.data.items.drivethrus import DriveThrus
+from .cars import BurningRouteRewardCars, BurningCars, CarbonCars, ParadiseBikes, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars, OnlineCars
 from .liveries import ParadiseCarsLivery, ParadiseBikesLivery
-from ...data import ItemTypeEnum
+from ...data import ItemTypeEnum, OutOfLogic
 from .blockers import Blockers
 from .discoverables import Discoverables
-from .events import Events
+from .events import RaceEvents, RoadRageEvents, MarkedManEvents, StuntRunEvents, BurningRideEvents, MidnightRideEvents, BigSurfIslandEvents
 from .filler import Filler
 
 all_items: list[ItemTypeEnum] = [
     *Blockers,
     *Discoverables,
-    *Cars,
+    *BurningRouteRewardCars,
     *BurningCars,
     *CarbonCars,
     *ParadiseBikes,
@@ -19,8 +20,16 @@ all_items: list[ItemTypeEnum] = [
     *CopCars,
     *BigSurfIslandCars,
     *OnlineCars,
-    *Events,
+    *RaceEvents,
+    *RoadRageEvents,
+    *MarkedManEvents,
+    *StuntRunEvents,
+    *BigSurfIslandEvents,
+    *BurningRideEvents,
+    *MidnightRideEvents,
     *ParadiseCarsLivery,
     *ParadiseBikesLivery,
-    *Filler
+    *DriveThrus,
+    *Filler,
+    *OutOfLogic
 ]

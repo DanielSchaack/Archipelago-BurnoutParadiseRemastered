@@ -64,8 +64,8 @@ class ParadiseCarsLivery(ItemTypeEnum):
     WATSON_REVENGE_RACER = ("Watson Revenge Racer Car Liveries", 2064, ItemClassification.filler)
     MONTGOMERY_HAWKER = ("Montgomery Hawker Car Liveries", 2065, ItemClassification.filler)
     MONTGOMERY_HAWKER_SOLO = ("Montgomery Hawker Solo Car Liveries", 2066, ItemClassification.filler)
-    KRIEGER_UBERSCHALL_8 = ("Krieger Uberschall 8 Car Liveries", 2068, ItemClassification.filler)
-    KRIEGER_UBERSCHALL_CLEAR_VIEW = ("Krieger Uberschall Clear-View Car Liveries", 2069, ItemClassification.filler)
+    KRIEGER_UBERSCHALL_8 = ("Krieger Ueberschall 8 Car Liveries", 2068, ItemClassification.filler)
+    KRIEGER_UBERSCHALL_CLEAR_VIEW = ("Krieger Ueberschall Clear-View Car Liveries", 2069, ItemClassification.filler)
     CARSON_THUNDER_CUSTOM = ("Carson Thunder Custom Car Liveries", 2071, ItemClassification.filler)
     CARSON_THUNDER_SHADOW = ("Carson Thunder Shadow Car Liveries", 2072, ItemClassification.filler)
     CARSON_HOT_ROD_COUPE = ("Carson Hot Rod Coupe Car Liveries", 2073, ItemClassification.filler)
@@ -75,7 +75,6 @@ class ParadiseCarsLivery(ItemTypeEnum):
     HUNTER_OLYMPUS = ("Hunter Olympus Car Liveries", 2081, ItemClassification.filler)
     NAKAMURA_RAI_JIN_TURBO = ("Nakamura Rai-Jin Turbo Car Liveries", 2082, ItemClassification.filler)
 
-# Not included yet
 class ParadiseBikesLivery(ItemTypeEnum):
     NAKAMURA_FV1100 = ("Nakamura FV1100 Liveries", 2077, ItemClassification.filler)
     NAKAMURA_FV1100_TI = ("Nakamura FV1100-TI Liveries", 2078, ItemClassification.filler)

@@ -18,6 +18,21 @@ class ItemTypeEnum(Enum):
         self.item_id = item_id
         self.classification = classification
 
+class OutOfLogic(ItemTypeEnum):
+    OUT_OF_LOGIC = ("Out of Logic", 1, ItemClassification.filler)
+
+class BoostType(Enum):
+    BIKE = "Bike"
+    SPECIAL = "Special"
+    SPEED = "Speed"
+    CRASH = "Crash"
+    STUNT = "Stunt"
+
+class CarItemTypeEnum(ItemTypeEnum):
+    def __init__( self, value: str, item_id: int, classification: ItemClassification, boosttype: BoostType,):
+        super().__init__(value, item_id, classification)
+        self.boosttype = boosttype
+
 @dataclass
 class ItemData:
     type: ItemTypeEnum
@@ -48,6 +63,12 @@ class LocationTypeEnum(Enum):
         self.rule = rule
         self.progress_type = progress_type
         # self.item_rule: Callable[[Item], bool] = item_rule
+
+class EventLocationTypeEnum(LocationTypeEnum):
+    def __init__(self, value: str, location_id: int, region: RegionTypeEnum, rule: CollectionRule | Rule[BurnoutParadiseRemasteredBase] = True_(), progress_type: LocationProgressType = LocationProgressType.DEFAULT, amount_events: int = 0, min_events: int = 0):
+        super().__init__(value, location_id, region, rule, progress_type)
+        self.amount_events = amount_events
+        self.min_events = min_events
 
 @dataclass(kw_only=True)
 class GeneratedLocationData:
