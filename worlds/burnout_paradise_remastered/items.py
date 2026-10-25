@@ -1,16 +1,17 @@
-from worlds.burnout_paradise_remastered.data.items.drivethrus import DriveThrus
+from itertools import chain
 from typing import TYPE_CHECKING
 
 from BaseClasses import Item, ItemClassification
-from .options import BreakableLocks
-from .constants import BURNOUT_PARADISE_REMASTERED
-from .data import ItemTypeEnum
+from .options import BreakableLocks, filler_default_dict
+from .constants import BURNOUT_PARADISE_REMASTERED, BreakableType, AreaType, ITEMS_OFFSET_BREAKABLES
+from .data import ItemTypeEnum, BoostType
+from .data.locations.cars import BURNING_CAR_TO_BURNING_ROUTE_UNLOCK
+from .data.items.drivethrus import DriveThrus
 from .data.items.blockers import Blockers
 from .data.items.discoverables import Discoverables
-from .data.items.cars import Cars, BurningCars, _BURNING_CARS_IN_ORDER, CarbonCars, ToyCars, LegendaryCars, BoostSpecialCars, CopCars, BigSurfIslandCars, ParadiseBikes, OnlineCars, get_car_names, get_paradise_car_names
+from .data.items.cars import _BURNING_CARS_IN_ORDER, get_car_names, get_paradise_car_names, BurningCars
+from .data.items.events import RaceEvents, StuntRunEvents, RoadRageEvents, MarkedManEvents
 from .data.items.liveries import ParadiseCarsLivery, ParadiseBikesLivery
-from .data.items.events import Events
-from .data.items.filler import get_default_dict
 
 if TYPE_CHECKING:
     from . import BurnoutParadiseRemasteredWorld
@@ -44,64 +45,53 @@ def create_items(world: "BurnoutParadiseRemasteredWorld"):
 
     starter_car = _BURNING_CARS_IN_ORDER[world.options.starter_car.value]
     starting_items.append(world.create_item(starter_car.value))
-    remaining_burning_cars = [c for c in BurningCars if c != starter_car]
+    remaining_cars = chain([c for c in world.event_items if c != starter_car and c in BURNING_CAR_TO_BURNING_ROUTE_UNLOCK], world.added_cars)
+    for item_type in remaining_cars:
+        create_single_item(world, item_type)
 
-    starting_events = list(world.random.sample(list(Events), world.options.starting_event_amount.value))
+    paradise_city_events = [e for e in world.event_items if e != starter_car and e in chain(BurningCars, RaceEvents, StuntRunEvents, RoadRageEvents, MarkedManEvents)]
+    starting_events = list(world.random.sample(paradise_city_events, world.options.starting_event_amount.value))
     starting_items.extend(world.create_item(e.value) for e in starting_events)
-
-    remaining_events = [e for e in Events if e not in starting_events]
+    remaining_events = [e for e in world.event_items if e not in starting_events]
     for item_type in remaining_events:
         create_single_item(world, item_type)
 
+    o = world.options
+    counts = {
+        BreakableType.SMASH: o.smash_counts.value,
+        BreakableType.BILLBOARD: o.billboard_counts.value,
+        BreakableType.SUPER_JUMP: o.super_jump_counts.value,
+        BreakableType.DRIVETHRU: o.drive_thru_counts.value,
+        BreakableType.ROADRULE_TIME: o.road_rule_time_count.value,
+        BreakableType.ROADRULE_SHOWTIME: o.road_rule_showtime_count.value,
+        BreakableType.ROADRULE_BIKES_DAY: o.road_rule_bike_day_count.value,
+        BreakableType.ROADRULE_BIKES_NIGHT: o.road_rule_bike_night_count.value,
+    }
 
     match world.options.breakable_locks:
         case BreakableLocks.option_locked_by_area:
             for item_type in Blockers:
-                create_single_item(world, item_type)
+                area = AreaType[item_type.name].value
+                # Only add if any counts within an area are configured
+                if any(c.get(area, 0) > 0 for c in counts.values()):
+                    create_single_item(world, item_type)
+
         case BreakableLocks.option_locked_by_area_and_type:
             for item_type in Discoverables:
-                create_single_item(world, item_type)
+                if item_type.name.endswith(("_ROADRULE_BIKES_DAY", "_ROADRULE_BIKES_NIGHT")) and not any(car.boosttype == BoostType.BIKE for car in world.added_cars):
+                    continue
 
-    for item_type in Cars:
-        create_single_item(world, item_type)
-    for item_type in remaining_burning_cars:
-        create_single_item(world, item_type)
-    for item_type in CarbonCars:
-        create_single_item(world, item_type)
-
-    if world.options.add_toy_cars.value:
-        for item_type in ToyCars:
-            create_single_item(world, item_type)
-
-    if world.options.add_legendary_cars.value:
-        for item_type in LegendaryCars:
-            create_single_item(world, item_type)
-
-    if world.options.add_boost_special_cars.value:
-        for item_type in BoostSpecialCars:
-            create_single_item(world, item_type)
-
-    if world.options.add_pcpd_cars.value:
-        for item_type in CopCars:
-            create_single_item(world, item_type)
-
-    if world.options.add_big_surf_island_cars.value:
-        for item_type in BigSurfIslandCars:
-            create_single_item(world, item_type)
-
-    if world.options.add_online_cars.value:
-        for item_type in OnlineCars:
-            create_single_item(world, item_type)
-
-    if world.options.add_paradise_bikes.value:
-        for item_type in ParadiseBikes:
-            create_single_item(world, item_type)
+                # Only add if any counts are configured
+                area_index, type_value = divmod(item_type.item_id - ITEMS_OFFSET_BREAKABLES, 10)
+                area = next(a for a in AreaType if a.index == area_index).value
+                if counts[BreakableType(type_value)].get(area, 0) > 0:
+                    create_single_item(world, item_type)
 
     if world.options.add_livery_items.value:
-        for item_type in ParadiseCarsLivery:
-            create_single_item(world, item_type)
-        if world.options.add_paradise_bikes.value:
-            for item_type in ParadiseBikesLivery:
+        car_prefixes = tuple(car.value for car in world.added_cars)
+
+        for item_type in chain(ParadiseCarsLivery, ParadiseBikesLivery):
+            if item_type.value.startswith(car_prefixes):
                 create_single_item(world, item_type)
 
     if world.options.add_drive_thru_jump_points.value:
@@ -112,14 +102,9 @@ def create_items(world: "BurnoutParadiseRemasteredWorld"):
 
     _remaining = total_location_count - len(world.itempool)
 
-    print(f"Starting item count: {len(starting_items)}")
-    print(f"Item pool count: {len(world.itempool)}")
-    print(f"Total location count: {total_location_count}")
-    print(f"Remaining locations to fill count: {_remaining}")
-
     filler_items_distribution = world.options.filler_items_distribution.value.copy()
     if sum(filler_items_distribution.values()) == 0:
-        filler_items_distribution = get_default_dict()
+        filler_items_distribution = filler_default_dict.copy()
 
     for filler_name in create_random_items(world, filler_items_distribution, _remaining):
         create_item_unchecked(world, filler_name)

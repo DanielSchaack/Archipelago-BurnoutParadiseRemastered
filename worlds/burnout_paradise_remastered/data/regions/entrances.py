@@ -318,7 +318,6 @@ class Entrances(EntranceTypeEnum):
         Regions.PALM_BAY_HEIGHTS_ROADRULE_TIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.PALM_BAY_HEIGHTS_ROADRULE_TIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
     SILVER_LAKE_TO_ROADRULE_TIME = (
         "Silver Lake To Silver Lake Road Rule Time",
@@ -326,7 +325,6 @@ class Entrances(EntranceTypeEnum):
         Regions.SILVER_LAKE_ROADRULE_TIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.SILVER_LAKE_ROADRULE_TIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
     WHITE_MOUNTAIN_TO_ROADRULE_TIME = (
         "White Mountain To White Mountain Road Rule Time",
@@ -334,7 +332,6 @@ class Entrances(EntranceTypeEnum):
         Regions.WHITE_MOUNTAIN_ROADRULE_TIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.WHITE_MOUNTAIN_ROADRULE_TIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
     HARBOR_TOWN_TO_ROADRULE_TIME = (
         "Harbor Town To Harbor Town Road Rule Time",
@@ -342,7 +339,6 @@ class Entrances(EntranceTypeEnum):
         Regions.HARBOR_TOWN_ROADRULE_TIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.HARBOR_TOWN_ROADRULE_TIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
     DOWNTOWN_PARADISE_TO_ROADRULE_TIME = (
         "Downtown Paradise To Downtown Paradise Road Rule Time",
@@ -350,7 +346,6 @@ class Entrances(EntranceTypeEnum):
         Regions.DOWNTOWN_PARADISE_ROADRULE_TIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.DOWNTOWN_PARADISE_ROADRULE_TIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
     BIG_SURF_ISLAND_TO_ROADRULE_TIME = (
         "Big Surf Island To Big Surf Island Road Rule Time",
@@ -358,7 +353,6 @@ class Entrances(EntranceTypeEnum):
         Regions.BIG_SURF_ISLAND_ROADRULE_TIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.BIG_SURF_ISLAND_ROADRULE_TIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
 
     PALM_BAY_HEIGHTS_TO_ROADRULE_SHOWTIME = (
@@ -367,7 +361,6 @@ class Entrances(EntranceTypeEnum):
         Regions.PALM_BAY_HEIGHTS_ROADRULE_SHOWTIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.PALM_BAY_HEIGHTS_ROADRULE_SHOWTIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
     SILVER_LAKE_TO_ROADRULE_SHOWTIME = (
         "Silver Lake To Silver Lake Road Rule Showtime",
@@ -375,7 +368,6 @@ class Entrances(EntranceTypeEnum):
         Regions.SILVER_LAKE_ROADRULE_SHOWTIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.SILVER_LAKE_ROADRULE_SHOWTIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
     WHITE_MOUNTAIN_TO_ROADRULE_SHOWTIME = (
         "White Mountain To White Mountain Road Rule Showtime",
@@ -383,7 +375,6 @@ class Entrances(EntranceTypeEnum):
         Regions.WHITE_MOUNTAIN_ROADRULE_SHOWTIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.WHITE_MOUNTAIN_ROADRULE_SHOWTIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
     HARBOR_TOWN_TO_ROADRULE_SHOWTIME = (
         "Harbor Town To Harbor Town Road Rule Showtime",
@@ -391,7 +382,6 @@ class Entrances(EntranceTypeEnum):
         Regions.HARBOR_TOWN_ROADRULE_SHOWTIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.HARBOR_TOWN_ROADRULE_SHOWTIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
     DOWNTOWN_PARADISE_TO_ROADRULE_SHOWTIME = (
         "Downtown Paradise To Downtown Paradise Road Rule Showtime",
@@ -399,7 +389,6 @@ class Entrances(EntranceTypeEnum):
         Regions.DOWNTOWN_PARADISE_ROADRULE_SHOWTIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.DOWNTOWN_PARADISE_ROADRULE_SHOWTIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
     BIG_SURF_ISLAND_TO_ROADRULE_SHOWTIME = (
         "Big Surf Island To Big Surf Island Road Rule Showtime",
@@ -407,7 +396,6 @@ class Entrances(EntranceTypeEnum):
         Regions.BIG_SURF_ISLAND_ROADRULE_SHOWTIME,
         EntranceType.TWO_WAY,
         Has(Discoverables.BIG_SURF_ISLAND_ROADRULE_SHOWTIME.value, options=[OptionFilter(BreakableLocks, BreakableLocks.option_locked_by_area_and_type)], filtered_resolution=True)
-        & HasEventWins(wins=4)
     )
 
     PALM_BAY_HEIGHTS_TO_ROADRULE_BIKES_DAY = (

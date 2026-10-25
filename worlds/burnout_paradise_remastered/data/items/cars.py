@@ -2,50 +2,50 @@ from collections import Counter
 from BaseClasses import ItemClassification
 from worlds.burnout_paradise_remastered.data import CarItemTypeEnum, BoostType
 
-class Cars(CarItemTypeEnum):
-    HUNTER_OVAL_CHAMP_69 = ("Hunter Oval Champ 69", 0xD676FB5119E20, ItemClassification.useful, BoostType.CRASH)
-    HUNTER_MESQUITE_CUSTOM = ("Hunter Mesquite Custom", 0xD676F97EFEC34, ItemClassification.useful, BoostType.CRASH)
-    NAKAMURA_RACING_SI_7 = ("Nakamura Racing SI-7", 0xD38DAEEA988B4, ItemClassification.useful, BoostType.SPEED)
-    HUNTER_VEGAS_CARNIVALE = ("Hunter Vegas Carnivale", 0xD676C159EDC20, ItemClassification.useful, BoostType.STUNT)
-    KRIEGER_PIONEER_SUPER_GATOR = ("Krieger Pioneer Super Gator", 0xD424F47F18A20, ItemClassification.useful, BoostType.CRASH)
-    NAKAMURA_IKUSA_SAMURAI = ("Nakamura Ikusa Samurai", 0xD38DAEE966C20, ItemClassification.useful, BoostType.STUNT)
-    KITANO_HYDROS_TECHNO = ("Kitano Hydros Techno", 0xD38DAC870CC20, ItemClassification.useful, BoostType.SPEED)
-    HUNTER_RELIABLE_SPECIAL = ("Hunter Reliable Special", 0xD676C3D7F1F8E, ItemClassification.useful, BoostType.CRASH)
-    WATSON_BURNOUT_ROADSTER = ("Watson Burnout Roadster", 0xD4248E9278B80, ItemClassification.useful, BoostType.STUNT)
-    ROSSOLINI_LM_TRACK_PACKAGE = ("Rossolini LM Track Package", 0xD424C965533F4, ItemClassification.useful, BoostType.SPEED)
-    HUNTER_MANHATTAN_CUSTOM = ("Hunter Manhattan Custom", 0xD676BB640CC20, ItemClassification.useful, BoostType.STUNT)
-    CARSON_FASTBACK_SPECIAL = ("Carson Fastback Special", 0xD676FF9BF8EB0, ItemClassification.useful, BoostType.SPEED)
-    CARSON_GRAND_SICILIAN = ("Carson Grand Sicilian", 0xA7E5EB1526820, ItemClassification.useful, BoostType.CRASH)
-    MONTGOMERY_HYPERION_RATTLER = ("Montgomery Hyperion Rattler", 0xD424F3E682220, ItemClassification.useful, BoostType.STUNT)
-    KRIEGER_616_ARACHNO_SPORT = ("Krieger 616 Arachno Sport", 0xD424F1A2EA474, ItemClassification.useful, BoostType.SPEED)
-    HUNTER_HOTSPUR = ("Hunter Hotspur", 0xD676FD4103020, ItemClassification.useful, BoostType.CRASH)
-    MONTGOMERY_SABOTAGE_GT_2400 = ("Montgomery Sabotage GT 2400", 0xD424EBAD09474, ItemClassification.useful, BoostType.SPEED)
-    JANSEN_P12_TRACK_PACKAGE = ("Jansen P12 Track Package", 0xD67720B7FDC20, ItemClassification.useful, BoostType.STUNT)
-    CARSON_INFERNO_BRT_VAN = ("Carson Inferno BRT Van", 0xD676C4256CDF4, ItemClassification.useful, BoostType.CRASH)
-    ROSSOLINI_TEMPESTA_GT = ("Rossolini Tempesta GT", 0xD424F1A1F5870, ItemClassification.useful, BoostType.SPEED)
-    CARSON_OPUS_XS = ("Carson Opus XS", 0xD676F93B0B220, ItemClassification.useful, BoostType.STUNT)
-    CARSON_ANNIHILATOR_PHOENIX = ("Carson Annihilator Phoenix", 0xD676FB773F820, ItemClassification.useful, BoostType.CRASH)
-    JANSEN_XS12 = ("Jansen XS12", 0xA59402A920C20, ItemClassification.useful, BoostType.SPEED)
-    KITANO_TOUGE_CRITERION = ("Kitano Touge Criterion", 0xD38DB0D94FE20, ItemClassification.useful, BoostType.STUNT)
-    HUNTER_TAKEDOWN_DIRT_RACER = ("Hunter Takedown Dirt Racer", 0xD677100787C20, ItemClassification.useful, BoostType.CRASH)
-    CARSON_RACING_500_GT = ("Carson Racing 500 GT", 0xD6771AC21CC20, ItemClassification.useful, BoostType.SPEED)
-    HUNTER_BRT_OVAL_CHAMP = ("Hunter BRT Oval Champ", 0xD6771C65BAA20, ItemClassification.useful, BoostType.CRASH)
-    CARSON_GT_FLAME = ("Carson GT Flame", 0xD676FBC38AC20, ItemClassification.useful, BoostType.STUNT)
-    HUNTER_CIVILIAN = ("Hunter Civilian", 0xD676C166913B4, ItemClassification.useful, BoostType.CRASH)
-    WATSON_REVENGE_RACER = ("Watson Revenge Racer", 0xD424EDF0A1220, ItemClassification.useful, BoostType.SPEED)
-    MONTGOMERY_HAWKER_SOLO = ("Montgomery Hawker Solo", 0xD424F17A86500, ItemClassification.useful, BoostType.STUNT)
-    KRIEGER_UBERSCHALL_CLEAR_VIEW = ("Krieger Überschall Clear-View", 0xD424EC43B9C93, ItemClassification.useful, BoostType.SPEED)
-    CARSON_THUNDER_SHADOW = ("Carson Thunder Shadow", 0xD676C2A7F49F4, ItemClassification.useful, BoostType.CRASH)
-    CARSON_TRIBAL_SPECIAL = ("Carson Tribal Special", 0xD676BC22C8E20, ItemClassification.useful, BoostType.STUNT)
-    KRIEGER_PCPD_SPECIAL = ("Krieger PCPD Special", 0xA7E5D5809C480, ItemClassification.useful, BoostType.SPEED)
+class BurningRouteRewardCars(CarItemTypeEnum):
+    HUNTER_OVAL_CHAMP_69 = ("Hunter Oval Champ 69", 0xD676FB5119E20, ItemClassification.progression, BoostType.CRASH)
+    HUNTER_MESQUITE_CUSTOM = ("Hunter Mesquite Custom", 0xD676F97EFEC34, ItemClassification.progression, BoostType.CRASH)
+    NAKAMURA_RACING_SI_7 = ("Nakamura Racing SI-7", 0xD38DAEEA988B4, ItemClassification.progression, BoostType.SPEED)
+    HUNTER_VEGAS_CARNIVALE = ("Hunter Vegas Carnivale", 0xD676C159EDC20, ItemClassification.progression, BoostType.STUNT)
+    KRIEGER_PIONEER_SUPER_GATOR = ("Krieger Pioneer Super Gator", 0xD424F47F18A20, ItemClassification.progression, BoostType.CRASH)
+    NAKAMURA_IKUSA_SAMURAI = ("Nakamura Ikusa Samurai", 0xD38DAEE966C20, ItemClassification.progression, BoostType.STUNT)
+    KITANO_HYDROS_TECHNO = ("Kitano Hydros Techno", 0xD38DAC870CC20, ItemClassification.progression, BoostType.SPEED)
+    HUNTER_RELIABLE_SPECIAL = ("Hunter Reliable Special", 0xD676C3D7F1F8E, ItemClassification.progression, BoostType.CRASH)
+    WATSON_BURNOUT_ROADSTER = ("Watson Burnout Roadster", 0xD4248E9278B80, ItemClassification.progression, BoostType.STUNT)
+    ROSSOLINI_LM_TRACK_PACKAGE = ("Rossolini LM Track Package", 0xD424C965533F4, ItemClassification.progression, BoostType.SPEED)
+    HUNTER_MANHATTAN_CUSTOM = ("Hunter Manhattan Custom", 0xD676BB640CC20, ItemClassification.progression, BoostType.STUNT)
+    CARSON_FASTBACK_SPECIAL = ("Carson Fastback Special", 0xD676FF9BF8EB0, ItemClassification.progression, BoostType.SPEED)
+    CARSON_GRAND_SICILIAN = ("Carson Grand Sicilian", 0xA7E5EB1526820, ItemClassification.progression, BoostType.CRASH)
+    MONTGOMERY_HYPERION_RATTLER = ("Montgomery Hyperion Rattler", 0xD424F3E682220, ItemClassification.progression, BoostType.STUNT)
+    KRIEGER_616_ARACHNO_SPORT = ("Krieger 616 Arachno Sport", 0xD424F1A2EA474, ItemClassification.progression, BoostType.SPEED)
+    HUNTER_HOTSPUR = ("Hunter Hotspur", 0xD676FD4103020, ItemClassification.progression, BoostType.CRASH)
+    MONTGOMERY_SABOTAGE_GT_2400 = ("Montgomery Sabotage GT 2400", 0xD424EBAD09474, ItemClassification.progression, BoostType.SPEED)
+    JANSEN_P12_TRACK_PACKAGE = ("Jansen P12 Track Package", 0xD67720B7FDC20, ItemClassification.progression, BoostType.STUNT)
+    CARSON_INFERNO_BRT_VAN = ("Carson Inferno BRT Van", 0xD676C4256CDF4, ItemClassification.progression, BoostType.CRASH)
+    ROSSOLINI_TEMPESTA_GT = ("Rossolini Tempesta GT", 0xD424F1A1F5870, ItemClassification.progression, BoostType.SPEED)
+    CARSON_OPUS_XS = ("Carson Opus XS", 0xD676F93B0B220, ItemClassification.progression, BoostType.STUNT)
+    CARSON_ANNIHILATOR_PHOENIX = ("Carson Annihilator Phoenix", 0xD676FB773F820, ItemClassification.progression, BoostType.CRASH)
+    JANSEN_XS12 = ("Jansen XS12", 0xA59402A920C20, ItemClassification.progression, BoostType.SPEED)
+    KITANO_TOUGE_CRITERION = ("Kitano Touge Criterion", 0xD38DB0D94FE20, ItemClassification.progression, BoostType.STUNT)
+    HUNTER_TAKEDOWN_DIRT_RACER = ("Hunter Takedown Dirt Racer", 0xD677100787C20, ItemClassification.progression, BoostType.CRASH)
+    CARSON_RACING_500_GT = ("Carson Racing 500 GT", 0xD6771AC21CC20, ItemClassification.progression, BoostType.SPEED)
+    HUNTER_BRT_OVAL_CHAMP = ("Hunter BRT Oval Champ", 0xD6771C65BAA20, ItemClassification.progression, BoostType.CRASH)
+    CARSON_GT_FLAME = ("Carson GT Flame", 0xD676FBC38AC20, ItemClassification.progression, BoostType.STUNT)
+    HUNTER_CIVILIAN = ("Hunter Civilian", 0xD676C166913B4, ItemClassification.progression, BoostType.CRASH)
+    WATSON_REVENGE_RACER = ("Watson Revenge Racer", 0xD424EDF0A1220, ItemClassification.progression, BoostType.SPEED)
+    MONTGOMERY_HAWKER_SOLO = ("Montgomery Hawker Solo", 0xD424F17A86500, ItemClassification.progression, BoostType.STUNT)
+    KRIEGER_UBERSCHALL_CLEAR_VIEW = ("Krieger Ueberschall Clear-View", 0xD424EC43B9C93, ItemClassification.progression, BoostType.SPEED)
+    CARSON_THUNDER_SHADOW = ("Carson Thunder Shadow", 0xD676C2A7F49F4, ItemClassification.progression, BoostType.CRASH)
+    CARSON_TRIBAL_SPECIAL = ("Carson Tribal Special", 0xD676BC22C8E20, ItemClassification.progression, BoostType.STUNT)
+    KRIEGER_PCPD_SPECIAL = ("Krieger PCPD Special", 0xA7E5D5809C480, ItemClassification.progression, BoostType.SPEED)
 
-    # NAKAMURA_IKUSA_GT_BZ = ("Nakamura B'Z Ikusa GT ", 0xA798843603C00, ItemClassification.useful)  # added
-    # KITANO_HYDROS_MICROMANIA_CUSTOM = ("Kitano Hydros Micromania Custom", 0xA798C34D34570, ItemClassification.useful)  # sponsor
-    # KITANO_GAMESTOP_SPORT = ("Kitano Gamespot Sport", 0xA7989E674C7C0, ItemClassification.useful)  # sponsor
-    # OVAL_STEEL_RACER = ("Oval Steel Racer", 0xA566038412870, ItemClassification.useful)  # sponsor
-    # TIGER_GT = ("Tiger GT", 0xA5235AA8AE1CF, ItemClassification.useful) - livery for GT Concept
-    # TEMPESTA_DREAM = ("Tempesta Dream", 0xA5234FBC86D60, ItemClassification.useful) - livery for Tempesta
-    # HIPPY_VAN = ("Hippy Van", 0xA566020D0000D, ItemClassification.useful)
+    # NAKAMURA_IKUSA_GT_BZ = ("Nakamura B'Z Ikusa GT ", 0xA798843603C00, ItemClassification.progression)  # added
+    # KITANO_HYDROS_MICROMANIA_CUSTOM = ("Kitano Hydros Micromania Custom", 0xA798C34D34570, ItemClassification.progression)  # sponsor
+    # KITANO_GAMESTOP_SPORT = ("Kitano Gamespot Sport", 0xA7989E674C7C0, ItemClassification.progression)  # sponsor
+    # OVAL_STEEL_RACER = ("Oval Steel Racer", 0xA566038412870, ItemClassification.progression)  # sponsor
+    # TIGER_GT = ("Tiger GT", 0xA5235AA8AE1CF, ItemClassification.progression) - livery for GT Concept
+    # TEMPESTA_DREAM = ("Tempesta Dream", 0xA5234FBC86D60, ItemClassification.progression) - livery for Tempesta
+    # HIPPY_VAN = ("Hippy Van", 0xA566020D0000D, ItemClassification.progression)
 
 class BurningCars(CarItemTypeEnum):
     HUNTER_CAVALRY = ("Hunter Cavalry", 0xA7E60F1A3A360, ItemClassification.progression, BoostType.STUNT)
@@ -79,18 +79,18 @@ class BurningCars(CarItemTypeEnum):
     HUNTER_CITIZEN = ("Hunter Citizen", 0xA7E5D3964E17C, ItemClassification.progression, BoostType.CRASH)
     WATSON_25_V16_REVENGE = ("Watson 25 V16 Revenge", 0xA594001623960, ItemClassification.progression, BoostType.SPEED)
     MONTGOMERY_HAWKER = ("Montgomery Hawker", 0xA5940206E8700, ItemClassification.progression, BoostType.STUNT)
-    KRIEGER_UBERSCHALL_8 = ("Krieger Überschall 8", 0xA593FE7285B60, ItemClassification.progression, BoostType.SPEED)
+    KRIEGER_UBERSCHALL_8 = ("Krieger Ueberschall 8", 0xA593FE7285B60, ItemClassification.progression, BoostType.SPEED)
     CARSON_THUNDER_CUSTOM = ("Carson Thunder Custom", 0xA7E5D4D6C2D60, ItemClassification.progression, BoostType.CRASH)
     CARSON_HOT_ROD_COUPE = ("Carson Hot Rod Coupe", 0xA7E5CE484B560, ItemClassification.progression, BoostType.STUNT)
     KRIEGER_RACING_WTR = ("Krieger Racing WTR", 0xA7E62DCC80F60, ItemClassification.progression, BoostType.SPEED)
 
 class CarbonCars(CarItemTypeEnum):
-    NAKAMURA_CARBON_IKUSA_GT = ("Nakamura Carbon Ikusa GT", 0x59504DAA96298, ItemClassification.useful, BoostType.CRASH)
-    KITANO_CARBON_HYDROS_CUSTOM = ("Kitano Carbon Hydros Custom", 0x59504DAB6F4B7, ItemClassification.useful, BoostType.STUNT)
-    JANSEN_CARBON_X12 = ("Jansen Carbon X12", 0x5950503D2DDCF, ItemClassification.useful, BoostType.STUNT)
-    CARSON_CARBON_GT_CONCEPT = ("Carson Carbon GT Concept", 0x59504F584C1CF, ItemClassification.useful, BoostType.SPEED)
-    MONTGOMERY_CARBON_HAWKER = ("Montgomery Carbon Hawker", 0x5950502A6E0EF, ItemClassification.useful, BoostType.SPEED)
-    KRIEGER_CARBON_UBERSCHALL_8 = ("Krieger Carbon Uberschall 8", 0x59504E259C4D8, ItemClassification.useful, BoostType.STUNT)
+    NAKAMURA_CARBON_IKUSA_GT = ("Nakamura Carbon Ikusa GT", 0x59504DAA96298, ItemClassification.progression, BoostType.CRASH)
+    KITANO_CARBON_HYDROS_CUSTOM = ("Kitano Carbon Hydros Custom", 0x59504DAB6F4B7, ItemClassification.progression, BoostType.STUNT)
+    JANSEN_CARBON_X12 = ("Jansen Carbon X12", 0x5950503D2DDCF, ItemClassification.progression, BoostType.STUNT)
+    CARSON_CARBON_GT_CONCEPT = ("Carson Carbon GT Concept", 0x59504F584C1CF, ItemClassification.progression, BoostType.SPEED)
+    MONTGOMERY_CARBON_HAWKER = ("Montgomery Carbon Hawker", 0x5950502A6E0EF, ItemClassification.progression, BoostType.SPEED)
+    KRIEGER_CARBON_UBERSCHALL_8 = ("Krieger Carbon Ueberschall 8", 0x59504E259C4D8, ItemClassification.progression, BoostType.STUNT)
 
 class OnlineCars(CarItemTypeEnum):
     HUNTER_OLYMPUS = ("Hunter Olympus", 0xA5235611C067C, ItemClassification.useful, BoostType.SPECIAL)
@@ -105,7 +105,7 @@ class ToyCars(CarItemTypeEnum):
     HUNTER_TOY_TAKEDOWN_4X4 = ("Hunter Toy Takedown 4x4", 0xA78DA86932360, ItemClassification.useful, BoostType.CRASH)
     HUNTER_TOY_CITIZEN = ("Hunter Toy Citizen", 0xA78D59D27617C, ItemClassification.useful, BoostType.CRASH)
     CARSON_TOY_INFERNO = ("Carson Toy Inferno", 0xA78D5C9063160, ItemClassification.useful, BoostType.CRASH)
-    NAKAMURA_TOY_FIREHAWK_GP = ("Nakamura Toy Firehawk GP", 0xA78D738010800, ItemClassification.progression, BoostType.SPECIAL)
+    NAKAMURA_TOY_FIREHAWK_GP = ("Nakamura Toy Firehawk GP", 0xA78D738010800, ItemClassification.progression, BoostType.BIKE)
 
 class LegendaryCars(CarItemTypeEnum):
     JANSEN_P12_88_SPECIAL = ("Jansen P12 88 Special", 0xA56601CB30510, ItemClassification.useful, BoostType.STUNT)
@@ -146,13 +146,14 @@ class CopCars(CarItemTypeEnum):
     CARSON_PCPD_500_GT = ("Carson PCPD 500 GT", 0xA538B8D49F360, ItemClassification.useful, BoostType.SPEED)
     HUNTER_PCPD_RACING_OVAL_CHAMP = ("Hunter PCPD Racing Oval Champ", 0xA538BA783D160, ItemClassification.useful, BoostType.CRASH)
     CARSON_PCPD_GT_CONCEPT = ("Carson PCPD GT Concept", 0xA5389B074C858, ItemClassification.useful, BoostType.STUNT)
+    WATSON_PCPD_25_V16_REVENGE = ("Watson PCPD 25 V16 Revenge", 0xA538BB10D3960, ItemClassification.useful, BoostType.SPEED)
     MONTGOMERY_PCPD_HAWKER = ("Montgomery PCPD Hawker", 0xA538BD0198700, ItemClassification.useful, BoostType.STUNT)
-    KRIEGER_PCPD_UBERSCHALL_8 = ("Krieger PCPD Uberschall 8", 0xA538B96D35B60, ItemClassification.useful, BoostType.SPEED)
+    KRIEGER_PCPD_UBERSCHALL_8 = ("Krieger PCPD Ueberschall 8", 0xA538B96D35B60, ItemClassification.useful, BoostType.SPEED)
     CARSON_PCPD_THUNDER_CUSTOM = ("Carson PCPD Thunder Custom", 0xA5385F6C70360, ItemClassification.useful, BoostType.CRASH)
     CARSON_PCPD_HOT_ROD_COUPE = ("Carson PCPD Hot Rod Coupe", 0xA5385A354B560, ItemClassification.useful, BoostType.STUNT)
 
 class BigSurfIslandCars(CarItemTypeEnum):
-    CARSON_DUST_STORM = ("Carson Dust Storm", 0xA55EBC7BF8700, ItemClassification.useful, BoostType.STUNT)
+    CARSON_DUST_STORM = ("Carson Dust Storm", 0xA55EBC7BF8700, ItemClassification.progression, BoostType.STUNT)
     CARSON_DUST_STORM_SUPERTURBO = ("Carson Dust Storm Superturbo", 0xA55EBC7CD8E4F, ItemClassification.useful, BoostType.STUNT)
     JANSEN_P12_DIAMOND = ("Jansen P12 Diamond", 0xA5231F81B5EC8, ItemClassification.useful, BoostType.STUNT)
     HUNTER_OLYMPUS_GOVERNOR = ("Hunter Olympus Governor", 0xA5235611C08ED, ItemClassification.useful, BoostType.STUNT)
@@ -163,10 +164,10 @@ class BigSurfIslandCars(CarItemTypeEnum):
     HUNTER_TOY_SPIRIT = ("Hunter Toy Spirit", 0xA78D716A01C00, ItemClassification.useful, BoostType.CRASH)
 
 class ParadiseBikes(CarItemTypeEnum):
-    NAKAMURA_FV1100 = ("Nakamura FV1100", 0xA7E60F0F736C0, ItemClassification.progression, BoostType.SPECIAL)
-    NAKAMURA_FV1100_TI = ("Nakamura FV1100-TI", 0xA7E60F0F6DEDC, ItemClassification.progression, BoostType.SPECIAL)
-    NAKAMURA_FIREHAWK_V4 = ("Nakamura Firehawk V4", 0xA7E60EF414960, ItemClassification.progression, BoostType.SPECIAL)
-    NAKAMURA_FIREHAWK_GP_COMPETITION = ("Nakamura Firehawk GP Competition", 0xA7E60F03E9EE4, ItemClassification.progression, BoostType.SPECIAL)
+    NAKAMURA_FV1100 = ("Nakamura FV1100", 0xA7E60F0F736C0, ItemClassification.progression, BoostType.BIKE)
+    NAKAMURA_FV1100_TI = ("Nakamura FV1100-TI", 0xA7E60F0F6DEDC, ItemClassification.progression, BoostType.BIKE)
+    NAKAMURA_FIREHAWK_V4 = ("Nakamura Firehawk V4", 0xA7E60EF414960, ItemClassification.progression, BoostType.BIKE)
+    NAKAMURA_FIREHAWK_GP_COMPETITION = ("Nakamura Firehawk GP Competition", 0xA7E60F03E9EE4, ItemClassification.progression, BoostType.BIKE)
 
 _BURNING_CARS_IN_ORDER = [
     BurningCars.HUNTER_CAVALRY,
@@ -208,7 +209,7 @@ _BURNING_CARS_IN_ORDER = [
 
 def count_boost_type(boost_type: BoostType) -> int:
     counter = Counter()
-    for cls in (Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars,
+    for cls in (BurningRouteRewardCars, BurningCars, CarbonCars, ToyCars, LegendaryCars,
                 BoostSpecialCars, CopCars, BigSurfIslandCars, OnlineCars,
                 ParadiseBikes):
         for item in cls:
@@ -217,13 +218,13 @@ def count_boost_type(boost_type: BoostType) -> int:
 
 def get_paradise_car_names() -> list[str]:
     names = []
-    for cls in (Cars, BurningCars, CarbonCars):
+    for cls in (BurningRouteRewardCars, BurningCars, CarbonCars):
         names.extend([member.value for member in cls])
     return names
 
 def get_car_names() -> list[str]:
     names = []
-    for cls in (Cars, BurningCars, CarbonCars, ToyCars, LegendaryCars,
+    for cls in (BurningRouteRewardCars, BurningCars, CarbonCars, ToyCars, LegendaryCars,
                 BoostSpecialCars, CopCars, BigSurfIslandCars, OnlineCars,
                 ParadiseBikes):
         names.extend([member.value for member in cls])

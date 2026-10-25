@@ -7,10 +7,6 @@ class Filler(ItemTypeEnum):
     BOOST_REFILL = ("Boost Refill", ITEMS_OFFSET_FILLER + 0, ItemClassification.filler)
     BOOST_SWAP = ("Boost Swap", ITEMS_OFFSET_FILLER + 1, ItemClassification.trap)
     CAR_SWAP = ("Car Swap", ITEMS_OFFSET_FILLER + 2, ItemClassification.trap)
+    HIGH_TRAFFIC_DENSITY = ("High Traffic Density", ITEMS_OFFSET_FILLER + 3, ItemClassification.trap)
+    RANDOM_TELEPORT= ("Random Junkyard Teleport", ITEMS_OFFSET_FILLER + 4, ItemClassification.trap)
 
-def get_default_dict():
-    return {
-        Filler.BOOST_REFILL.value: 50,
-        Filler.BOOST_SWAP.value: 25,
-        Filler.CAR_SWAP.value: 5,
-    }

@@ -1,10 +1,11 @@
+from itertools import chain
 import dataclasses
 from typing import override, TYPE_CHECKING
 
 from BaseClasses import CollectionState
 from rule_builder.rules import Rule
 from ..items.cars import BurningCars
-from ..items.events import Events
+from ..items.events import RaceEvents, StuntRunEvents, RoadRageEvents, MarkedManEvents
 from ...constants import BURNOUT_PARADISE_REMASTERED
 
 if TYPE_CHECKING:
@@ -18,7 +19,7 @@ class HasEventWins(Rule["BurnoutParadiseRemasteredBase"], game=BURNOUT_PARADISE_
     @override
     def _instantiate(self, world: "BurnoutParadiseRemasteredBase") -> Rule.Resolved:
         # caching_enabled only needs to be passed in when your world inherits from CachedRuleBuilderWorld
-        return self.Resolved(wins=self.wins, player=world.player, caching_enabled=False)
+        return self.Resolved(wins=self.wins, player=world.player, caching_enabled=True)
 
     class Resolved(Rule.Resolved):
         wins: int
@@ -29,7 +30,7 @@ class HasEventWins(Rule["BurnoutParadiseRemasteredBase"], game=BURNOUT_PARADISE_
             LICENSE_THRESHOLDS = (2, 7, 15, 26, 40, 120)
 
             event_count = state.count_from_list(
-                [item.value for item in Events],
+                [item.value for item in chain(RaceEvents, StuntRunEvents, RoadRageEvents, MarkedManEvents)],
                 self.player
             )
 
@@ -39,31 +40,44 @@ class HasEventWins(Rule["BurnoutParadiseRemasteredBase"], game=BURNOUT_PARADISE_
             )
 
             remaining_wins = self.wins
-            remaining_burning_events = burning_event_count
 
             for threshold in LICENSE_THRESHOLDS:
                 stage_wins = min(remaining_wins, threshold)
-
-                normal_wins = min(event_count, stage_wins)
-                missing_wins = stage_wins - normal_wins
-
-                burning_wins = min(remaining_burning_events, missing_wins)
-
-                if normal_wins + burning_wins < stage_wins:
+                if event_count + burning_event_count < stage_wins:
                     return False
-
-                remaining_burning_events -= burning_wins
                 remaining_wins -= stage_wins
-
                 if remaining_wins <= 0:
                     return True
-
             return remaining_wins <= 0
+
+            # remaining_burning_events = burning_event_count
+            #
+            # for threshold in LICENSE_THRESHOLDS:
+            #     stage_wins = min(remaining_wins, threshold)
+            #
+            #     normal_wins = min(event_count, stage_wins)
+            #     missing_wins = stage_wins - normal_wins
+            #
+            #     burning_wins = min(remaining_burning_events, missing_wins)
+            #
+            #     if normal_wins + burning_wins < stage_wins:
+            #         return False
+            #
+            #     remaining_burning_events -= burning_wins
+            #     remaining_wins -= stage_wins
+            #
+            #     if remaining_wins <= 0:
+            #         return True
+            #
+            # return remaining_wins <= 0
 
         @override
         def item_dependencies(self) -> dict[str, set[int]]:
             return {
-                **{item.value: {id(self)} for item in Events},
+                **{item.value: {id(self)} for item in RaceEvents},
+                **{item.value: {id(self)} for item in StuntRunEvents},
+                **{item.value: {id(self)} for item in RoadRageEvents},
+                **{item.value: {id(self)} for item in MarkedManEvents},
                 **{item.value: {id(self)} for item in BurningCars}
             }
 

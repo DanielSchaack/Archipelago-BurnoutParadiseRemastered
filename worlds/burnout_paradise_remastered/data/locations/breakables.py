@@ -1,8 +1,10 @@
-from rule_builder.rules import True_, HasGroup
+from worlds.burnout_paradise_remastered.options import FinishedEventsStayFinished
+from rule_builder.options import OptionFilter
+from rule_builder.rules import True_, HasGroup, HasGroupUnique, Has
 from .. import GeneratedLocationData, BoostType, RegionTypeEnum
 from ..rules.state_rules import HasEventWins
 from ..regions.regions import Regions
-from ...constants import AreaType, BreakableType, LOCATIONS_OFFSET_BREAKABLES
+from ...constants import AreaType, BreakableType, LOCATIONS_OFFSET_BREAKABLES, WinType, wintype_to_item_group
 
 breakable_count_lookup = {
     AreaType.DOWNTOWN_PARADISE.value : {
@@ -10,30 +12,30 @@ breakable_count_lookup = {
         BreakableType.BILLBOARD: 30,
         BreakableType.SUPER_JUMP: 10,
         BreakableType.DRIVETHRU: 12,
-        BreakableType.ROADRULE_TIME: 13,
-        BreakableType.ROADRULE_SHOWTIME: 13,
-        BreakableType.ROADRULE_BIKES_DAY: 13,
-        BreakableType.ROADRULE_BIKES_NIGHT: 13,
+        BreakableType.ROADRULE_TIME: 12,
+        BreakableType.ROADRULE_SHOWTIME: 12,
+        BreakableType.ROADRULE_BIKES_DAY: 12,
+        BreakableType.ROADRULE_BIKES_NIGHT: 12,
     },
     AreaType.HARBOR_TOWN.value: {
         BreakableType.SMASH: 90,
         BreakableType.BILLBOARD: 25,
         BreakableType.SUPER_JUMP: 10,
         BreakableType.DRIVETHRU: 10,
-        BreakableType.ROADRULE_TIME: 14,
-        BreakableType.ROADRULE_SHOWTIME: 14,
-        BreakableType.ROADRULE_BIKES_DAY: 14,
-        BreakableType.ROADRULE_BIKES_NIGHT: 14,
+        BreakableType.ROADRULE_TIME: 13,
+        BreakableType.ROADRULE_SHOWTIME: 13,
+        BreakableType.ROADRULE_BIKES_DAY: 13,
+        BreakableType.ROADRULE_BIKES_NIGHT: 13,
     },
     AreaType.WHITE_MOUNTAIN.value: {
         BreakableType.SMASH: 90,
         BreakableType.BILLBOARD: 25,
         BreakableType.SUPER_JUMP: 10,
         BreakableType.DRIVETHRU: 7,
-        BreakableType.ROADRULE_TIME: 10,
-        BreakableType.ROADRULE_SHOWTIME: 10,
-        BreakableType.ROADRULE_BIKES_DAY: 10,
-        BreakableType.ROADRULE_BIKES_NIGHT: 10,
+        BreakableType.ROADRULE_TIME: 11,
+        BreakableType.ROADRULE_SHOWTIME: 11,
+        BreakableType.ROADRULE_BIKES_DAY: 11,
+        BreakableType.ROADRULE_BIKES_NIGHT: 11,
     },
     AreaType.SILVER_LAKE.value: {
         BreakableType.SMASH: 90,
@@ -50,16 +52,16 @@ breakable_count_lookup = {
         BreakableType.BILLBOARD: 20,
         BreakableType.SUPER_JUMP: 10,
         BreakableType.DRIVETHRU: 10,
-        BreakableType.ROADRULE_TIME: 18,
-        BreakableType.ROADRULE_SHOWTIME: 18,
-        BreakableType.ROADRULE_BIKES_DAY: 18,
-        BreakableType.ROADRULE_BIKES_NIGHT: 18,
+        BreakableType.ROADRULE_TIME: 19,
+        BreakableType.ROADRULE_SHOWTIME: 19,
+        BreakableType.ROADRULE_BIKES_DAY: 19,
+        BreakableType.ROADRULE_BIKES_NIGHT: 19,
     },
     AreaType.BIG_SURF_ISLAND.value: {
         BreakableType.SMASH: 75,
         BreakableType.BILLBOARD: 45,
         BreakableType.SUPER_JUMP: 15,
-        BreakableType.DRIVETHRU: 5,
+        BreakableType.DRIVETHRU: 3,
         BreakableType.ROADRULE_TIME: 12,
         BreakableType.ROADRULE_SHOWTIME: 12,
         BreakableType.ROADRULE_BIKES_DAY: 12,
@@ -158,7 +160,11 @@ def get_locations_for_breakable_option(breakable: BreakableType, area: AreaType,
     region = type_region_lookup[area][breakable] if lock_option == BreakableLocks.option_locked_by_area_and_type else region_lookup[area]
     rule = True_()
     if lock_option == BreakableLocks.option_locked_by_area and breakable in [BreakableType.ROADRULE_TIME, BreakableType.ROADRULE_SHOWTIME]:
-        rule = HasEventWins(wins=4)
+        rule = (
+            (HasEventWins(wins=4, options=[OptionFilter(FinishedEventsStayFinished, False)]) & Has("Out of Logic"))
+            | HasEventWins(wins=5, options=[OptionFilter(FinishedEventsStayFinished, False)])
+            | HasGroupUnique("Any Event", count=4, options=[OptionFilter(FinishedEventsStayFinished, True)])
+        )
     elif lock_option == BreakableLocks.option_locked_by_area and breakable in [BreakableType.ROADRULE_BIKES_DAY, BreakableType.ROADRULE_BIKES_NIGHT]:
         rule = HasGroup("Bike")
     for num in range(count):
@@ -189,11 +195,34 @@ def get_car_wins_locations_by_boost(
     region: RegionTypeEnum,
     base_id: int,
 ) -> list[GeneratedLocationData]:
+    event_rule = HasGroup("Bike Event") if boost_type == BoostType.BIKE else HasGroup("Car Event")
+    group_name = f"{boost_type.value.capitalize()}" if boost_type == BoostType.BIKE else f"{boost_type.value.capitalize()} Car" 
+    location_name = f"Unique {boost_type.value.capitalize()} Wins" if boost_type == BoostType.BIKE else f"Unique {boost_type.value.capitalize()}-Car Wins"
+
     return [
         GeneratedLocationData(
-            name=f"Unique {boost_type.value.capitalize()}-Car Wins - Win {i}",
+            name=f"{location_name} - Win {i}",
             region=region,
-            rule=HasGroup(f"{boost_type.value.capitalize()} Car", count=i),
+            rule=HasGroupUnique(group_name, count=i) & event_rule,
+            location_id=base_id + i - 1,
+        )
+        for i in range(1, count + 1)
+    ]
+
+def get_event_wins_locations_by_type(
+    win_type: WinType,
+    count: int,
+    region: RegionTypeEnum,
+    base_id: int,
+) -> list[GeneratedLocationData]:
+    bike_access = True_()
+    if win_type in [WinType.BURNING_RIDE_WINS, WinType.MIDNIGHT_RIDE_WINS]:
+        bike_access &= HasGroup("Bike")
+    return [
+        GeneratedLocationData(
+            name=f"{win_type.value} - Win {i}",
+            region=region,
+            rule=HasGroupUnique(f"{wintype_to_item_group[win_type.value]}", count=i) & bike_access,
             location_id=base_id + i - 1,
         )
         for i in range(1, count + 1)
