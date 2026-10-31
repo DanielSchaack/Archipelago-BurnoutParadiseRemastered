@@ -1,4 +1,3 @@
-from worlds.burnout_paradise_remastered.data.items.cars import BigSurfIslandCars
 from itertools import chain
 from rule_builder.rules import HasGroup, True_
 from collections import defaultdict, Counter
@@ -6,7 +5,7 @@ from typing import TYPE_CHECKING
 
 from BaseClasses import Location, Region, EntranceType
 from .options import BreakableLocks, UniqueCarWins, UniqueEventWins
-from .data import RegionTypeEnum, GeneratedLocationData, BoostType
+from .data import RegionTypeEnum, GeneratedLocationData, BoostType, CarItemTypeEnum
 from .data.locations import LicenseLocations
 from .data.locations.events import RaceLocations, StuntRunLocations, RoadRageLocations, MarkedManLocations, BurningRouteLocations, BikeEventLocations, BigSurfIslandLocations
 from .data.locations.cars import CarLocations, CarWinLocations, BurningCarWinLocations, CarbonCarWinLocations, ToyCarWinLocations, LegendaryCarWinLocations, CopCarWinLocations, BigSurfIslandCarWinLocations, OnlineCarWinLocations, ParadiseBikesWinLocations, BoostSpecialCarWinLocations, BURNING_ROUTE_UNLOCK_TO_BURNING_CAR
@@ -84,6 +83,10 @@ def create_regions(world: "BurnoutParadiseRemasteredWorld"):
         case UniqueCarWins.option_grouped_by_boost_type:
             boost_counter = Counter()
             for car in world.added_cars:
+                boost_counter[car.boosttype] += 1
+
+            cars = [car for car in world.event_items if isinstance(car, CarItemTypeEnum)]
+            for car in cars:
                 boost_counter[car.boosttype] += 1
 
             speed_count   = boost_counter.get(BoostType.SPEED, 0)

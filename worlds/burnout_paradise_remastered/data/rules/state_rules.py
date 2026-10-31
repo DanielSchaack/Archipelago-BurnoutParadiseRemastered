@@ -29,12 +29,12 @@ class HasEventWins(Rule["BurnoutParadiseRemasteredBase"], game=BURNOUT_PARADISE_
         def _evaluate(self, state: CollectionState) -> bool:
             LICENSE_THRESHOLDS = (2, 7, 15, 26, 40, 120)
 
-            event_count = state.count_from_list(
+            event_count = state.count_from_list_unique(
                 [item.value for item in chain(RaceEvents, StuntRunEvents, RoadRageEvents, MarkedManEvents)],
                 self.player
             )
 
-            burning_event_count = state.count_from_list(
+            burning_event_count = state.count_from_list_unique(
                 [item.value for item in BurningCars],
                 self.player
             )
