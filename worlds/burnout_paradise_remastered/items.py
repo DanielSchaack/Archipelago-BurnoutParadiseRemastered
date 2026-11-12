@@ -1,3 +1,4 @@
+from Options import OptionError
 from itertools import chain
 from typing import TYPE_CHECKING
 
@@ -101,8 +102,15 @@ def create_items(world: "BurnoutParadiseRemasteredWorld"):
             create_single_item(world, item_type)
 
     total_location_count = len(world.multiworld.get_unfilled_locations(world.player))
+    total_item_count = len(world.itempool)
 
-    _remaining = total_location_count - len(world.itempool)
+    _remaining = total_location_count - total_item_count
+    if total_item_count > total_location_count:
+        raise OptionError(
+            f"{world.game}: {world.player_name} creates {total_item_count} items, but only includes {total_location_count} locations. "
+            f"Add more locations like increasing any of the Breakables (Smashes, Super Jumps, Billboards, Road Rules) "
+            f"or shrink the item pool (by reducing the amount of non-Burning Cars or disabling separate car liveries)."
+        )
 
     filler_items_distribution = world.options.filler_items_distribution.value.copy()
     if sum(filler_items_distribution.values()) == 0:
