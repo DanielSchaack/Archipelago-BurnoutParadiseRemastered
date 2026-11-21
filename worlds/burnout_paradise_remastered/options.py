@@ -120,6 +120,8 @@ class ModeBaseDifficulty(OptionCounter):
     Base difficulty per event mode. The game expects you to win any event with any car. Must be in Range of 0 to 6.
     0 is the difficulty of a new game, 6 is the maximum difficulty.
 
+    This can be adjusted in the game's F3 config manager. (Slot data takes precedence when logging into an AP World)
+
     **NOTE**: Be careful! You are always expected to beat any event with any car.
 
     Valid Options:
@@ -199,6 +201,7 @@ class StarterCar(Choice):
 class StartingEventAmount(Range):
     """
     With how many random Paradise City Car Events do you want to start with? (Excluding your starter car)
+    Randomly chooses X of all included events and/or Burning Cars to be available right when you start.
     """
     display_name = "Starting Event Amount"
     range_start = 0
@@ -612,7 +615,8 @@ class FinishedEventsStayFinished(DefaultOnToggle):
     rich_text_doc = True
 
 filler_default_dict = {
-    "Boost Refill": 50,
+    "Boost Refill": 75,
+    "Boost Depletion": 25,
     "Boost Swap": 25,
     "Car Swap": 10,
     "High Traffic Density": 25,
@@ -624,6 +628,7 @@ class FillerItemsDistribution(ItemDict):
 
     Valid Options:
         - **Boost Refill** - Refills your Boost bar
+        - **Boost Depletion** - Depletes your Boost bar
         - **Boost Swap** - Randomizes your current Boost type. This lasts until your next car change.
         - **Car Swap** - Randomizes your current car to one you already received. This can only occure outside of an event.
         - **Random Junkyard Teleport** - Teleports you to a random junkyard, regardless of if you are in an event or not.

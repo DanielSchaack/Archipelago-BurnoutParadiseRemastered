@@ -9,4 +9,5 @@ class Filler(ItemTypeEnum):
     CAR_SWAP = ("Car Swap", ITEMS_OFFSET_FILLER + 2, ItemClassification.trap)
     HIGH_TRAFFIC_DENSITY = ("High Traffic Density", ITEMS_OFFSET_FILLER + 3, ItemClassification.trap)
     RANDOM_TELEPORT= ("Random Junkyard Teleport", ITEMS_OFFSET_FILLER + 4, ItemClassification.trap)
+    BOOST_DEPLETION = ("Boost Depletion", ITEMS_OFFSET_FILLER + 5, ItemClassification.trap)
 

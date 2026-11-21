@@ -52,7 +52,7 @@ def create_regions(world: "BurnoutParadiseRemasteredWorld"):
 
     match world.options.unique_car_wins:
         case UniqueCarWins.option_each_car_its_own:
-            car_suffixes = tuple(car.value for car in world.added_cars)
+            car_suffixes = tuple(car.value for car in chain(world.added_cars, world.event_items))
 
             for _location in chain(
                 CarWinLocations,
